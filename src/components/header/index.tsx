@@ -36,26 +36,22 @@ const navigation = [
     }
 ]
 
-export interface IHeaderProps { }
-
-export default function Header(props: IHeaderProps) {
-    const [isPageScroll, setIsPageScroll] = React.useState(false)
-    const [showSubmenu, setShowSubmenu] = React.useState(-1)
+export default function Header() {
     const pathName = usePathname()
+    const [isPageScroll, setIsPageScroll] = React.useState(pathName === "/" ? false : true)
+    const [showSubmenu, setShowSubmenu] = React.useState(-1)
 
     React.useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY >= 70) {
-                setIsPageScroll(true)
-            } else {
-                setIsPageScroll(false)
+        if (pathName === "/") {
+            const handleScroll = () => {
+                if (window.scrollY >= 100) setIsPageScroll(true)
+                else setIsPageScroll(false)
             }
-        }
+            window.addEventListener('scroll', handleScroll)
 
-        window.addEventListener('scroll', handleScroll)
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll)
+            return () => {
+                window.removeEventListener('scroll', handleScroll)
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
