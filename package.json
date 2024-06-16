@@ -13,11 +13,11 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
-    "react-image-lightbox": "^5.1.4",
     "sass": "^1.77.4",
     "styled-components": "^6.1.11",
     "swiper": "^11.1.4",
-    "yarn": "^1.22.22"
+    "yarn": "^1.22.22",
+    "yet-another-react-lightbox": "^3.20.0"
   },
   "devDependencies": {
     "@types/node": "^20",
