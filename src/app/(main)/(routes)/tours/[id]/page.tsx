@@ -1,10 +1,11 @@
 "use client"
-import Image from 'next/image'
-import Lightbox from "rhino-react-image-lightbox-rotate"
-import { useState } from 'react'
 
+import Image from 'next/image'
+import Lightbox from "react-image-lightbox"
+import { useState } from 'react'
+import "react-image-lightbox/style.css"
 export default function TourDetail() {
-    const [selectedImage, setSelectedImage] = useState<boolean>(false)
+    const [selectedImage, setSelectedImage] = useState<{ status: boolean, data: string }>({ status: false, data: "" })
 
     return (
         <>
@@ -28,18 +29,16 @@ export default function TourDetail() {
                     <div className='h-full w-full relative row-span-1 cursor-pointer'>
                         <Image src="/tour-1.jpg" layout='fill' alt="image" />
                     </div>
-                    <div className='h-full w-full relative row-span-1 cursor-pointer' onClick={() => setSelectedImage(true)}>
+                    <div className='h-full w-full relative row-span-1 cursor-pointer' onClick={() => setSelectedImage({ status: true, data: 'https://cdn3.ivivu.com/2015/11/20-hinh-anh-tuyet-dep-ve-Viet-Nam-ivivu-13.jpg' })}>
                         <Image src="/tour-1.jpg" layout='fill' alt="image" className='rounded-br-[8px]' />
                     </div>
                 </div>
             </div>
-            {selectedImage === true && (
+            {selectedImage.status && (
                 <div className="lightbox">
                     <Lightbox
-                        mainSrc={"/tour-1.jpg"}
-                        onCloseRequest={() => setSelectedImage(false)}
-                        nextSrc={"/tour-1.jpg"}
-                        prevSrc={"/tour-1.jpg"}
+                        mainSrc={selectedImage.data}
+                        onCloseRequest={() => setSelectedImage({ status: false, data: "" })}
                     />
                 </div>
             )}
