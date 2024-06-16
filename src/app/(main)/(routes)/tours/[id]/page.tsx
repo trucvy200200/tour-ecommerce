@@ -38,7 +38,7 @@ export default function TourDetail() {
                 <div className="lightbox">
                     <Lightbox
                         mainSrc={selectedImage.data}
-                        onCloseRequest={() => setSelectedImage({ status: false, data: "" })}
+                        onCloseRequest={() => setSelectedImage({ status: true, data: "" })}
                     />
                 </div>
             )}
