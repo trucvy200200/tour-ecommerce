@@ -10,7 +10,7 @@ export default function TourDetail() {
 
     return (
         <>
-            <div className="container mt-[100px] flex flex-col gap-[20px] mb-[5rem]">
+            <div className="container mt-[140px] flex flex-col gap-[20px] mb-[5rem]">
                 <div className="text-[33px] font-bold leading-[33px] uppercase">Havana Nha Trang Hotel</div>
                 <div className="flex items-center gap-2">
                     <CiLocationOn size={23} />
