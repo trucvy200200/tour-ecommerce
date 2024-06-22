@@ -18,8 +18,6 @@ const SwiperStyled = styled(Swiper)`
     cursor: default;
     box-shadow:  0px 4px 10px 0px rgba(0, 0, 0, 0.15);
     .img-zoom {
-      width: 100%;
-      height: 100%;
       overflow: hidden;
       object-fit: cover;
       transition: all 4s ease;
@@ -40,7 +38,7 @@ export default function HotTour() {
   return (
     <div className="mx-2 my-[30px]">
       <div className="text-[33px] font-bold leading-[33px] text-center uppercase">Hot tours this month</div>
-      <div className="flex max-md:flex-col-reverse flex-col">
+      <div className="flex flex-col">
         <div className="swiper-container">
           <SwiperStyled
             spaceBetween={20}

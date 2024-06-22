@@ -137,3 +137,13 @@
     }
    }
 }
+
+.map-detail {
+  iframe {
+    width: 100%;
+    height: 225px;
+    @media (max-width: 640px) {
+      height: 225px;
+    }
+  }
+}
