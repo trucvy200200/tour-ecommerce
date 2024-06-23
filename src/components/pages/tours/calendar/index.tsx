@@ -1,165 +1,16 @@
 import dayjs from "dayjs"
 import "dayjs/locale/zh-cn"
 import dayLocaleData from "dayjs/plugin/localeData"
-import { Calendar, theme, Badge } from "antd"
-import styled from "styled-components"
+import { Calendar, Badge } from "antd"
 import { useState } from "react"
 import Image from 'next/image'
 
 dayjs.extend(dayLocaleData)
 
-const Wrapper = styled.div`
-  position: relative;
-  .ant-picker-calendar {
-    padding: 0 40px;
-    @media (max-width: 479.98px) {
-      padding: 0 20px;
-    }
-  }
-  .ant-picker-panel {
-    border-radius: 8px;
-    padding: 5px;
-  }
-  .time {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
-    h2 {
-      margin: 0;
-      font-weight: 700;
-      font-size: 40px;
-      line-height: 54px;
-      letter-spacing: -2px;
-      color: black;
-    }
-    p {
-      font-size: 20px;
-      font-weight: 500;
-      line-height: 32px;
-    }
-  }
-  .monthDisplay {
-    background: #166699 !important;
-    padding: 5px 15px !important;
-    border-radius: 8px !important;
-    border: 1px solid #166699 !important;
-    color: white;
-    font-weight: 500;
-  }
-  .monthActions {
-    width: 100%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, 100%);
-    .button {
-      cursor: pointer;
-      width: 30px;
-      height: 30px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      background-color: #166699;
-      color: #fff;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-      box-shadow: none;
-      transition: 0.3s;
-      &.disable {
-        background-color: grey;
-      }
-      &-prev {
-        img {
-          transform: rotate(180deg);
-        }
-      }
-      &-next {
-      }
-    }
-    @media (max-width: 479.98px) {
-      .button {
-        width: 25px;
-        height: 25px;
-        &-prev {
-          transform: translateX(-10px);
-        }
-        &-next {
-          transform: translateX(10px);
-        }
-      }
-    }
-  }
-`
-
-const CalendarStyled = styled(Calendar)`
-  .ant-picker-calendar-date-content {
-    .ant-badge {
-      .ant-badge-status-dot {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .ant-badge-status-text {
-        color: black;
-        margin: 0;
-      }
-    }
-  }
-  .ant-picker-calendar-date-value {
-    display: none;
-  }
-  border-color: transparent !important;
-  .ant-select-selection-item {
-    color: white !important;
-  }
-  .ant-picker-panel {
-    border-color: transparent !important;
-  }
-  .ant-picker-cell-today {
-    .ant-picker-cell-inner::before {
-      border-color: #166699 !important;
-    }
-  }
-  .ant-picker-cell-inner {
-    min-width: 30px !important;
-    height: 30px !important;
-    line-height: 30px !important;
-  }
-  .ant-picker-cell-selected {
-    .ant-picker-cell-inner {
-      background: #166699 !important;
-    }
-    .ant-picker-calendar-date-content {
-      .ant-badge {
-        .ant-badge-status-text {
-          color: white;
-        }
-      }
-    }
-  }
-  .ant-select-single {
-    height: auto;
-    &.ant-select-open {
-      &.ant-select-selection-item {
-        color: white !important;
-      }
-    }
-  }
-  .ant-select-arrow {
-    color: white !important;
-  }
-`
-
 const CalendarComponent = () => {
   const [date, setDate] = useState(dayjs())
   const [selectedDate, setSelectedDate] = useState<any>()
   const [localeData, setLocaleData] = useState(dayjs().localeData().months(dayjs().clone()))
-  const { token } = theme.useToken()
   const data = [{ date: '2024-06-25', time: '10:00:00' }, { date: '2024-06-26', time: '11:00:00' }]
 
   const dateCellRender = (value: any) => {
@@ -171,17 +22,13 @@ const CalendarComponent = () => {
     return info.originNode
   }
 
-  const wrapperStyle = {
-    width: "100%",
-    borderRadius: token.borderRadiusLG
-  }
-
   return (
     <>
-      <Wrapper style={wrapperStyle}>
-        <div className="monthDisplay">{localeData}</div>
-        <CalendarStyled
+      <div className="w-full rounded-[8px] relative">
+        <div className="bg-[#166699] p-[5px_15px] text-[white] rounded-[8px]">{localeData}</div>
+        <Calendar
           fullscreen={false}
+          className="calendar-wrapper px-[40px]"
           cellRender={cellRender}
           disabledDate={(current) => {
             return current < dayjs().add(-1, "days")
@@ -191,9 +38,10 @@ const CalendarComponent = () => {
             let current = value?.clone()
             let locale = value?.localeData()
             return (
-              <div className="monthActions flex items-center justify-between">
+              <div className="w-full absolute left-1/2 top-1/2 transform -translate-x-1/2 translate-y-1 flex items-center justify-between">
                 <div
-                  className={`button button-prev ${current?.month() - dayjs().month() === 0 ? "disable" : null}`}
+                  className={`w-[30px] h-[30px] cursor-pointer flex items-center bg-[#166699] justify-center rounded-[8px]
+                     ${current?.month() - dayjs().month() === 0 ? "bg-[grey]" : null}`}
                   onClick={() => {
                     let prevMonths = dayjs()
                     if (current?.month() - dayjs().month() !== 0)
@@ -202,10 +50,11 @@ const CalendarComponent = () => {
                     onChange(prevMonths)
                   }}
                 >
-                  <Image src={"/icons/ic-chevron-right-white.svg"} width={18} height={18} priority alt={"icon"} />
+                  <Image src={"/icons/ic-chevron-right-white.svg"} width={18} height={18} priority alt={"icon"} className="transform rotate-180" />
                 </div>
                 <div
-                  className={`button button-next ${current?.month() - dayjs().month() === 3 ? "disable" : null}`}
+                  className={`w-[30px] h-[30px] cursor-pointer flex items-center bg-[#166699] justify-center rounded-[8px]
+                     ${current?.month() - dayjs().month() === 3 ? "bg-[grey]" : null}`}
                   onClick={() => {
                     if (current?.month() - dayjs().month() !== 3) {
                       const nextMonths = current?.clone()?.add(1, "months")
@@ -225,7 +74,7 @@ const CalendarComponent = () => {
             setSelectedDate(data?.length > 0 ? data?.find((item: any) => item.date === newDate?.format("YYYY-MM-DD")) : null)
           }}
         />
-      </Wrapper>
+      </div>
     </>
   )
 }

@@ -147,3 +147,74 @@
     }
   }
 }
+
+//calendar
+.calendar-wrapper{
+  .ant-picker-calendar-date-content {
+    .ant-badge {
+      .ant-badge-status-dot {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .ant-badge-status-text {
+        color: black;
+        margin: 0;
+      }
+    }
+  }
+  .ant-picker-calendar-date-value {
+    display: none !important;
+  }
+  border-color: transparent !important;
+  .ant-select-selection-item {
+    color: white !important;
+  }
+  .ant-picker-panel {
+    border-color: transparent !important;
+  }
+  .ant-picker-cell-today {
+    .ant-picker-cell-inner::before {
+      border-color: #166699 !important;
+    }
+  }
+  .ant-picker-cell-inner {
+    min-width: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+  }
+  .ant-picker-cell-selected {
+    .ant-picker-cell-inner {
+      background: #166699 !important;
+    }
+    .ant-picker-calendar-date-content {
+      .ant-badge {
+        .ant-badge-status-text {
+          color: white;
+        }
+      }
+    }
+  }
+  .ant-select-single {
+    height: auto;
+    &.ant-select-open {
+      &.ant-select-selection-item {
+        color: white !important;
+      }
+    }
+  }
+  .ant-select-arrow {
+    color: white !important;
+  }
+  .ant-picker-panel {
+    border-radius: 8px;
+    padding: 5px;
+  }
+  .ant-picker-calendar {
+    padding: 0 40px;
+    @media (max-width: 479.98px) {
+      padding: 0 20px;
+    }
+  }
+}

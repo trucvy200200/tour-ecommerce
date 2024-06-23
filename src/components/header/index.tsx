@@ -49,7 +49,7 @@ export default function Header() {
     React.useEffect(() => {
         if (pathName === "/") {
             const handleScroll = () => {
-                if (window.scrollY >= 100) {
+                if (window.scrollY >= 70) {
                     setIsPageScroll(true)
                     setShowSubHeader(false)
                 }
@@ -65,7 +65,7 @@ export default function Header() {
             }
         } else {
             const handleScroll = () => {
-                if (window.scrollY >= 100) setShowSubHeader(false)
+                if (window.scrollY >= 70) setShowSubHeader(false)
                 else setShowSubHeader(true)
             }
             window.addEventListener('scroll', handleScroll)

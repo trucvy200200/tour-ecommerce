@@ -5,15 +5,14 @@ const ModalStyled = styled(Modal)`
   padding: 0.786rem 1.5rem;
   .ant-modal-content {
     border-radius: 10px !important;
-    background-color: #05133c;
-    color: white;
+    background-color: white;
+    color: black;
   }
   .ant-modal-footer {
     display: none;
   }
   .ant-modal-close-x{
-    color: white;
-    opacity: 0.6;
+    color: black;
   }
 `
 interface Props {
@@ -25,12 +24,13 @@ interface Props {
     cancelText?: string,
     okText?: string,
     okButtonProps?: any,
-    cancelButtonProps?: any
+    cancelButtonProps?: any,
+    width?: number
 }
-const CustomModal = ({ open, onCancel, title, children, onOk, cancelText, okText, okButtonProps, cancelButtonProps, ...props }: Props) => {
+const CustomModal = ({ open, onCancel, title, children, onOk, cancelText, okText, okButtonProps, cancelButtonProps, width }: Props) => {
     return (
         <ModalStyled
-            {...props}
+            width={width}
             centered
             open={open}
             onCancel={onCancel}
