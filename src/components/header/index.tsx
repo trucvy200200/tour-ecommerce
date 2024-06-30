@@ -21,15 +21,15 @@ const navigation = [
         submenu: [
             {
                 title: 'Northern Vietnam',
-                url: '/tour?region=Northern+Vietnam',
+                url: '/tours?region=Northern+Vietnam',
             },
             {
                 title: 'Central Vietnam',
-                url: '/tour?region=Central+Vietnam',
+                url: '/tours?region=Central+Vietnam',
             },
             {
                 title: 'Southern Vietnam',
-                url: '/tour?region=Southern+Vietnam',
+                url: '/tours?region=Southern+Vietnam',
             }
         ]
     },
