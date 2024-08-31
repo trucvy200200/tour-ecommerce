@@ -1,10 +1,16 @@
+'use client'
 import Image from 'next/image'
 import { userRoutes } from '@/routes'
 import { useState, useRef, useEffect } from 'react'
+import { BiLogOut } from "react-icons/bi"
+import { useAuth } from "@/stores/auth"
+import { getFromLocalStorage } from "@/helpers/base.helper"
 
 const UserDropdown = () => {
     const [showMenu, setShowMenu] = useState<boolean>(false)
     const catMenu = useRef<HTMLDivElement>(null)
+    const [storeAuth, actionAuth] = useAuth()
+    const userData = getFromLocalStorage("userData")
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutsideDropdown)
@@ -14,6 +20,10 @@ const UserDropdown = () => {
         if (showMenu && !catMenu?.current?.contains(e.target as Node)) {
             setShowMenu(false)
         }
+    }
+
+    const handleLogout = () => {
+        actionAuth.logoutAsync({ id: userData?.id })
     }
 
     return (
@@ -34,10 +44,17 @@ const UserDropdown = () => {
                         {
                             userRoutes?.map((item: any, index: number) => {
                                 return (
-                                    <a href={item.url} key={index} className="text-left px-2 py-3 hover:text-[#166699] text-[black] font-normal">{item.title}</a>
+                                    <a href={item.url} key={index} className="text-left px-2 py-3 hover:text-[#166699] text-[black] font-normal flex gap-2 items-center">
+                                        {item?.icon && item.icon}
+                                        {item.title}
+                                    </a>
                                 )
                             })
                         }
+                        <div onClick={handleLogout} className='hover:text-[#166699] text-[black] px-2 pb-3 pt-1 font-normal flex gap-2 items-center'>
+                            <BiLogOut size={18} />
+                            Logout
+                        </div>
                     </div>
                 }
             </div>

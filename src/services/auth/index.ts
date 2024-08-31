@@ -1,5 +1,5 @@
 import API from "@/configs/api/repository-api"
-import { IReqLogin, IReqRegister, IReqVerifyMail } from "./auth.interface"
+import { IReqLogin, IReqRegister, IReqVerifyMail, IReqLogout } from "./auth.interface"
 
 export const loginService = (payload: IReqLogin): Promise<any> => {
   return API.post(`/sign-in`, {
@@ -7,8 +7,10 @@ export const loginService = (payload: IReqLogin): Promise<any> => {
   }) as any
 }
 
-export const logoutService = (): Promise<any> => {
-  return API.post(`/log-out`) as any
+export const logoutService = (payload: IReqLogout): Promise<any> => {
+  return API.post(`/log-out`, {
+    body: { ...payload }
+  }) as any
 }
 
 export const registerService = (payload: IReqRegister): Promise<any> => {

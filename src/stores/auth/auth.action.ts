@@ -6,8 +6,7 @@ import { LOGIN_ERRORS } from "@/constants/base.constant"
 import { loginService, registerService, logoutService } from "@/services/auth"
 import { MESS_LOGIN, MESS_REGISTER } from "@/constants/message-notification"
 import { saveToCookie, saveToLocalStorage, removeFromLocalStorage, removeCookie, getFromLocalStorage } from "@/helpers/base.helper"
-import { IReqLogin, IReqRegister } from "@/services/auth/auth.interface"
-import { signOut } from "next-auth/react"
+import { IReqLogin, IReqRegister, IReqLogout } from "@/services/auth/auth.interface"
 
 type Actions = BaseAction<State>
 
@@ -43,8 +42,8 @@ export const loginAsync = (payload: IReqLogin) =>
 
       return result
     } catch (error: any) {
-      const result = error?.message
-      notifyError(result)
+      const result = error?.response
+      notifyError("Server error")
       return result
     }
   }
@@ -61,17 +60,15 @@ export const registerAsync =
         }
         return result
       } catch (error: any) {
-        const result = error?.message
-        notifyError(result)
+        const result = error?.response
+        notifyError("Server error")
         return result
       }
     }
 
-export const logoutAsync = (): any => async ({ setState, getState }: Actions) => {
+export const logoutAsync = (payload: IReqLogout): any => async ({ setState, getState }: Actions) => {
   try {
-    const result = await logoutService()
-    const isSocial = getFromLocalStorage("social")
-    removeFromLocalStorage("breadCrumb")
+    const result = await logoutService(payload)
     removeFromLocalStorage("token")
     removeFromLocalStorage("userData")
     removeFromLocalStorage("isLogin")
@@ -79,18 +76,14 @@ export const logoutAsync = (): any => async ({ setState, getState }: Actions) =>
       ...getState(),
       isRegister: false,
       isLogin: false,
-      isModalLogin: false,
       userData: {}
     })
-    notifySuccess(MESS_LOGIN.LOGOUT_SUCCESS)
-    if (isSocial) {
-      signOut()
-    }
+    notifySuccess("Logout successfully")
 
-    return result?.status
+    return result
   } catch (error: any) {
     const result = error?.response
-    notifyError(MESS_REGISTER.ERROR_SERVER)
+    notifyError("Server error")
     return result
   }
 }

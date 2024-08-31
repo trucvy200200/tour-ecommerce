@@ -1,3 +1,6 @@
+import { FaRegUser } from "react-icons/fa"
+import { TiShoppingBag } from "react-icons/ti"
+
 export const navigation = [
     {
         title: "Home",
@@ -33,10 +36,12 @@ export const navigation = [
 export const userRoutes = [
     {
         title: "Manage account",
-        url: "/profile"
+        url: "/profile",
+        icon: <FaRegUser size={16} />
     },
     {
         title: "Bookings & Trips",
-        url: "/my-trip"
+        url: "/my-trip",
+        icon: <TiShoppingBag size={18} />
     }
 ]

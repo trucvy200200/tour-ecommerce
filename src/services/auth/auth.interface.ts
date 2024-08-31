@@ -15,3 +15,7 @@ export interface IReqVerifyMail {
   verificationCode?: string
   password?: string
 }
+
+export interface IReqLogout {
+  id: string
+}
