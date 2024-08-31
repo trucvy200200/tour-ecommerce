@@ -2,8 +2,10 @@ import { useEffect, useState } from "react"
 import { FiMinus } from "react-icons/fi"
 import { FaPlus } from "react-icons/fa6"
 import { RiErrorWarningLine } from "react-icons/ri"
+import { useRouter } from "next/navigation"
 
 const Ticket = () => {
+    const router = useRouter()
     const [adultNumber, setAdultNumber] = useState(0)
     const [childNumber, setChildNumber] = useState(0)
 
@@ -38,7 +40,7 @@ const Ticket = () => {
                 <div className="text-[14px] font-normal">Total</div>
                 <div className="text-[16px] font-bold">600000 VND</div>
             </div>
-            <div className="py-2 w-full rounded-[8px] bg-[#166699] text-white text-center cursor-pointer">
+            <div className="py-2 w-full rounded-[8px] bg-[#166699] text-white text-center cursor-pointer" onClick={() => router.push('/booking/asd')}>
                 Confirm
             </div>
             <div className="flex gap-2 items-center">

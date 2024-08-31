@@ -6,38 +6,10 @@ import { usePathname } from "next/navigation"
 import { CiSearch, CiLogin } from "react-icons/ci"
 import { FaPhone } from "react-icons/fa"
 import Login from '@/components/pages/auth/login'
-
-const navigation = [
-    {
-        title: "Home",
-        url: "/"
-    },
-    {
-        title: "About us",
-        url: "/about-us"
-    },
-    {
-        title: "Tour",
-        submenu: [
-            {
-                title: 'Northern Vietnam',
-                url: '/tours?region=Northern+Vietnam',
-            },
-            {
-                title: 'Central Vietnam',
-                url: '/tours?region=Central+Vietnam',
-            },
-            {
-                title: 'Southern Vietnam',
-                url: '/tours?region=Southern+Vietnam',
-            }
-        ]
-    },
-    {
-        title: "Contact",
-        url: "/contact"
-    }
-]
+import { navigation } from '@/routes'
+import UserDropdown from "./user-dropdown"
+import { getFromLocalStorage } from "@/helpers/base.helper"
+import { useAuth } from "@/stores/auth"
 
 export default function Header() {
     const pathName = usePathname()
@@ -45,6 +17,14 @@ export default function Header() {
     const [showSubmenu, setShowSubmenu] = React.useState(-1)
     const [showSubHeader, setShowSubHeader] = React.useState(true)
     const [isOpen, setIsOpen] = React.useState(false)
+    const isLogin = getFromLocalStorage("isLogin")
+    const userData = getFromLocalStorage("userData")
+    const [, actionAuth] = useAuth()
+
+    React.useEffect(() => {
+        userData?.id && actionAuth.setUser({ userData, isLogin: true })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     React.useEffect(() => {
         if (pathName === "/") {
@@ -82,6 +62,7 @@ export default function Header() {
         if (showSubmenu !== -1 && showSubmenu === index) return "block"
         return "hidden"
     }
+
     return (
         <div className="flex flex-col justify-center font-bold text-white">
             <div className={`flex flex-col items-center w-full ${isPageScroll ? "bg-[#166699]" : "bg-[rgba(255,255,255,0.1)]"} fixed z-[99] top-0`}>
@@ -101,10 +82,14 @@ export default function Header() {
                                     <CiSearch className="absolute top-[5px] right-[5px]" color="#000" />
                                 </div>
                             </div>
-                            <div className="flex gap-2 items-center cursor-pointer hover:text-[black]" onClick={() => setIsOpen(true)}>
-                                <CiLogin size={23} />
-                                Login
-                            </div>
+                            {
+                                isLogin && userData?.id ? <UserDropdown />
+                                    :
+                                    <div className="flex gap-2 items-center cursor-pointer hover:text-[black]" onClick={() => setIsOpen(true)}>
+                                        <CiLogin size={23} />
+                                        Login
+                                    </div>
+                            }
                         </div>
                     </div>
                 }
