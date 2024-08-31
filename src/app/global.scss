@@ -280,3 +280,25 @@
   -webkit-animation: dashed 1.5s ease infinite;
   animation: dashed 1.5s ease infinite;
 }
+
+//scrollbar
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.scrollbar-thin {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+}
+
+::-webkit-scrollbar-track {
+  // background-color: var(--color-white);
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--main);
+  border-radius: 100vw;
+}

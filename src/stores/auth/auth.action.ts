@@ -54,10 +54,10 @@ export const registerAsync =
     async ({ dispatch, getState, setState }: Actions) => {
       try {
         const result = await registerService(payload)
-        if (result) {
-          notifySuccess(MESS_REGISTER.REGISTER_SUCCESS)
+        if (result.errCode === 200) {
+          notifySuccess("Register successfully")
         } else {
-          notifyError((result?.message || MESS_REGISTER.ERROR_SERVER) as any)
+          notifyError((result?.message) as any)
         }
         return result
       } catch (error: any) {

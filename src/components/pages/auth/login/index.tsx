@@ -3,7 +3,7 @@ import Modal from '@/components/common/modal'
 import Register from '@/components/pages/auth/register'
 import ForgotPassword from '@/components/pages/auth/forgot-password'
 import { useState } from 'react'
-import { saveToLocalStorage, getFromLocalStorage, removeFromLocalStorage } from "@/helpers/base.helper"
+import { saveToLocalStorage, getFromLocalStorage } from "@/helpers/base.helper"
 import { useEffect } from 'react'
 import { useAuth } from "@/stores/auth"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -33,7 +33,6 @@ const Login = (props: Props) => {
     })
 
     const {
-        reset,
         register,
         handleSubmit,
         setValue,

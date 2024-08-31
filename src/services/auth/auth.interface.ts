@@ -5,10 +5,8 @@ export interface IReqLogin {
 
 export interface IReqRegister {
   fullName: string
-  username: string
-  phone: string
+  address: string
   email: string
-  birthday?: string
   password: string
 }
 
