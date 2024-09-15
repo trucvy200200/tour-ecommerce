@@ -7,9 +7,13 @@ import { CiSearch, CiLogin } from "react-icons/ci"
 import { FaPhone } from "react-icons/fa"
 import Login from '@/components/pages/auth/login'
 import { navigation } from '@/routes'
-import UserDropdown from "./user-dropdown"
 import { getFromLocalStorage } from "@/helpers/base.helper"
 import { useAuth } from "@/stores/auth"
+import dynamic from "next/dynamic"
+
+const UserDropdown = dynamic(() => import("./user-dropdown"), {
+    ssr: false
+})
 
 export default function Header() {
     const pathName = usePathname()

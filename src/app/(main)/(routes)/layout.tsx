@@ -1,6 +1,10 @@
-import Header from "@/components/header"
+import dynamic from "next/dynamic"
 import { Toaster } from "react-hot-toast"
 import { ToastContainer } from "react-toastify"
+
+const Header = dynamic(() => import("@/components/header"), {
+  ssr: false
+})
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   return (

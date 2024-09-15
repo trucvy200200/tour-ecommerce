@@ -32,9 +32,9 @@ const API = {
       params?: Record<string, unknown>
       body?: Record<string, unknown>
     } = {
-        params: {},
-        body: {}
-      }
+      params: {},
+      body: {}
+    }
   ): Promise<any> => {
     return axiosClient.post(url, payload.body, {
       params: payload.params
@@ -46,9 +46,9 @@ const API = {
       params?: Record<string, unknown>
       body?: Record<string, unknown>
     } = {
-        params: {},
-        body: {}
-      }
+      params: {},
+      body: {}
+    }
   ): Promise<any> => {
     return axiosClient.post(url, getFormData(payload.body || {}), {
       params: payload.params
@@ -60,9 +60,9 @@ const API = {
       params?: Record<string, unknown>
       body?: Record<string, unknown>
     } = {
-        params: {},
-        body: {}
-      }
+      params: {},
+      body: {}
+    }
   ): Promise<any> => {
     return axiosClient.put(url, payload.body, {
       params: payload.params
@@ -74,9 +74,9 @@ const API = {
       params?: Record<string, unknown>
       body?: Record<string, unknown>
     } = {
-        params: {},
-        body: {}
-      }
+      params: {},
+      body: {}
+    }
   ): Promise<any> => {
     return axiosClient.put(url, getFormData(payload.body || {}), {
       params: payload.params
@@ -88,9 +88,9 @@ const API = {
       params?: Record<string, unknown>
       body?: Record<string, unknown>
     } = {
-        params: {},
-        body: {}
-      }
+      params: {},
+      body: {}
+    }
   ): Promise<any> => {
     return axiosClient.patch(url, payload.body, {
       params: payload.params
@@ -102,9 +102,9 @@ const API = {
       params?: Record<string, unknown>
       body?: Record<string, unknown>
     } = {
-        params: {},
-        body: {}
-      }
+      params: {},
+      body: {}
+    }
   ): Promise<any> => {
     return axiosClient.patch(url, getFormData(payload.body || {}), {
       params: payload.params
@@ -118,11 +118,224 @@ const API = {
     payload: {
       body?: Record<string, unknown>
     } = {
-        body: {}
-      }
+      body: {}
+    }
   ): Promise<any> => {
     return axiosClient.delete(url, { data: payload?.body })
   }
 }
 
+const API_USER = {
+  get: (url: string, params: Record<string, unknown> = {}, header: AxiosRequestHeaders = {}): Promise<any> => {
+    return userClient.get(url, {
+      params,
+      headers: { ...header }
+    })
+  },
+  post: (
+    url: string,
+    payload: {
+      params?: Record<string, unknown>
+      body?: Record<string, unknown>
+    } = {
+      params: {},
+      body: {}
+    }
+  ): Promise<any> => {
+    return userClient.post(url, payload.body, {
+      params: payload.params
+    })
+  },
+  postFormData: (
+    url: string,
+    payload: {
+      params?: Record<string, unknown>
+      body?: Record<string, unknown>
+    } = {
+      params: {},
+      body: {}
+    }
+  ): Promise<any> => {
+    return userClient.post(url, getFormData(payload.body || {}), {
+      params: payload.params
+    })
+  },
+  put: (
+    url: string,
+    payload: {
+      params?: Record<string, unknown>
+      body?: Record<string, unknown>
+    } = {
+      params: {},
+      body: {}
+    }
+  ): Promise<any> => {
+    return userClient.put(url, payload.body, {
+      params: payload.params
+    })
+  },
+  putFormData: (
+    url: string,
+    payload: {
+      params?: Record<string, unknown>
+      body?: Record<string, unknown>
+    } = {
+      params: {},
+      body: {}
+    }
+  ): Promise<any> => {
+    return userClient.put(url, getFormData(payload.body || {}), {
+      params: payload.params
+    })
+  },
+  patch: (
+    url: string,
+    payload: {
+      params?: Record<string, unknown>
+      body?: Record<string, unknown>
+    } = {
+      params: {},
+      body: {}
+    }
+  ): Promise<any> => {
+    return userClient.patch(url, payload.body, {
+      params: payload.params
+    })
+  },
+  patchFormData: (
+    url: string,
+    payload: {
+      params?: Record<string, unknown>
+      body?: Record<string, unknown>
+    } = {
+      params: {},
+      body: {}
+    }
+  ): Promise<any> => {
+    return userClient.patch(url, getFormData(payload.body || {}), {
+      params: payload.params
+    })
+  },
+  delete: (url: string, params: Record<string, unknown> = {}): Promise<any> => {
+    return userClient.delete(url, { params })
+  },
+  deleteFormData: (
+    url: string,
+    payload: {
+      body?: Record<string, unknown>
+    } = {
+      body: {}
+    }
+  ): Promise<any> => {
+    return userClient.delete(url, { data: payload?.body })
+  }
+}
+
+const API_SYSTEM = {
+  get: (url: string, params: Record<string, unknown> = {}, header: AxiosRequestHeaders = {}): Promise<any> => {
+    return systemClient.get(url, {
+      params,
+      headers: { ...header }
+    })
+  },
+  post: (
+    url: string,
+    payload: {
+      params?: Record<string, unknown>
+      body?: Record<string, unknown>
+    } = {
+      params: {},
+      body: {}
+    }
+  ): Promise<any> => {
+    return systemClient.post(url, payload.body, {
+      params: payload.params
+    })
+  },
+  postFormData: (
+    url: string,
+    payload: {
+      params?: Record<string, unknown>
+      body?: Record<string, unknown>
+    } = {
+      params: {},
+      body: {}
+    }
+  ): Promise<any> => {
+    return systemClient.post(url, getFormData(payload.body || {}), {
+      params: payload.params
+    })
+  },
+  put: (
+    url: string,
+    payload: {
+      params?: Record<string, unknown>
+      body?: Record<string, unknown>
+    } = {
+      params: {},
+      body: {}
+    }
+  ): Promise<any> => {
+    return systemClient.put(url, payload.body, {
+      params: payload.params
+    })
+  },
+  putFormData: (
+    url: string,
+    payload: {
+      params?: Record<string, unknown>
+      body?: Record<string, unknown>
+    } = {
+      params: {},
+      body: {}
+    }
+  ): Promise<any> => {
+    return systemClient.put(url, getFormData(payload.body || {}), {
+      params: payload.params
+    })
+  },
+  patch: (
+    url: string,
+    payload: {
+      params?: Record<string, unknown>
+      body?: Record<string, unknown>
+    } = {
+      params: {},
+      body: {}
+    }
+  ): Promise<any> => {
+    return systemClient.patch(url, payload.body, {
+      params: payload.params
+    })
+  },
+  patchFormData: (
+    url: string,
+    payload: {
+      params?: Record<string, unknown>
+      body?: Record<string, unknown>
+    } = {
+      params: {},
+      body: {}
+    }
+  ): Promise<any> => {
+    return systemClient.patch(url, getFormData(payload.body || {}), {
+      params: payload.params
+    })
+  },
+  delete: (url: string, params: Record<string, unknown> = {}): Promise<any> => {
+    return systemClient.delete(url, { params })
+  },
+  deleteFormData: (
+    url: string,
+    payload: {
+      body?: Record<string, unknown>
+    } = {
+      body: {}
+    }
+  ): Promise<any> => {
+    return systemClient.delete(url, { data: payload?.body })
+  }
+}
+
 export default API
+export { API_USER, API_SYSTEM }

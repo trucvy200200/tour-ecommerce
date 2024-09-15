@@ -13,11 +13,12 @@ type Actions = BaseAction<State>
 //USER
 export const setUser =
   (payload: { userData: any; isLogin?: boolean; isRegister?: boolean }) =>
-    ({ setState, getState }: Actions) => {
-      setState({ ...getState(), ...payload })
-    }
+  ({ setState, getState }: Actions) => {
+    setState({ ...getState(), ...payload })
+  }
 
-export const loginAsync = (payload: IReqLogin) =>
+export const loginAsync =
+  (payload: IReqLogin) =>
   async ({ dispatch, getState, setState }: Actions) => {
     try {
       const result = await loginService(payload)
@@ -25,7 +26,9 @@ export const loginAsync = (payload: IReqLogin) =>
       if (result.errCode === 200) {
         saveToLocalStorage("token", result?.accessToken)
         saveToLocalStorage("isLogin", true)
-
+        saveToCookie(null, KEY_COOKIE.TOKEN, result?.accessToken, {
+          path: "/"
+        })
         if (result?.userInfo) {
           saveToLocalStorage("userData", result?.userInfo)
           dispatch(
@@ -34,7 +37,7 @@ export const loginAsync = (payload: IReqLogin) =>
               isLogin: true
             })
           )
-          notifySuccess('Login successfully')
+          notifySuccess("Login successfully")
         }
       } else {
         notifyError(result?.message)
@@ -50,40 +53,42 @@ export const loginAsync = (payload: IReqLogin) =>
 
 export const registerAsync =
   (payload: IReqRegister) =>
-    async ({ dispatch, getState, setState }: Actions) => {
-      try {
-        const result = await registerService(payload)
-        if (result.errCode === 200) {
-          notifySuccess("Register successfully")
-        } else {
-          notifyError((result?.message) as any)
-        }
-        return result
-      } catch (error: any) {
-        const result = error?.response
-        notifyError("Server error")
-        return result
+  async ({ dispatch, getState, setState }: Actions) => {
+    try {
+      const result = await registerService(payload)
+      if (result.errCode === 200) {
+        notifySuccess("Register successfully")
+      } else {
+        notifyError(result?.message as any)
       }
+      return result
+    } catch (error: any) {
+      const result = error?.response
+      notifyError("Server error")
+      return result
     }
-
-export const logoutAsync = (payload: IReqLogout): any => async ({ setState, getState }: Actions) => {
-  try {
-    const result = await logoutService(payload)
-    removeFromLocalStorage("token")
-    removeFromLocalStorage("userData")
-    removeFromLocalStorage("isLogin")
-    setState({
-      ...getState(),
-      isRegister: false,
-      isLogin: false,
-      userData: {}
-    })
-    notifySuccess("Logout successfully")
-
-    return result
-  } catch (error: any) {
-    const result = error?.response
-    notifyError("Server error")
-    return result
   }
-}
+
+export const logoutAsync =
+  (payload: IReqLogout): any =>
+  async ({ setState, getState }: Actions) => {
+    try {
+      const result = await logoutService(payload)
+      removeFromLocalStorage("token")
+      removeFromLocalStorage("userData")
+      removeFromLocalStorage("isLogin")
+      setState({
+        ...getState(),
+        isRegister: false,
+        isLogin: false,
+        userData: {}
+      })
+      notifySuccess("Logout successfully")
+
+      return result
+    } catch (error: any) {
+      const result = error?.response
+      notifyError("Server error")
+      return result
+    }
+  }
