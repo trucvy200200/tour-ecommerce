@@ -1,7 +1,7 @@
 import { KEY_COOKIE } from "@/constants/key-cookie.constant"
 import { BASE_CONSTANTS } from "@/constants/base.constant"
 import { destroyCookie, parseCookies, setCookie } from "nookies"
-import { IDestroyCookieOptions, IParseCookieOptions, ISetCookieOptions } from "models/cookie.model"
+import { IDestroyCookieOptions, IParseCookieOptions, ISetCookieOptions } from "@/models/cookie.model"
 import moment from "moment"
 
 export const saveToLocalStorage = (key: string, value: any) => window.localStorage.setItem(key, JSON.stringify(value))

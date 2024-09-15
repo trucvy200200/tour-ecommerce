@@ -1,13 +1,17 @@
+"use client"
 import Image from "next/image"
 import { CiTimer } from "react-icons/ci"
 import { IoStar, IoChevronForwardSharp } from "react-icons/io5"
 import { TOUR_MODEL } from "@/models/tour.model"
+import { useRouter } from "next/navigation"
 
 interface Props {
   data: TOUR_MODEL
 }
 
 const Card = (props: Props) => {
+  const router = useRouter()
+
   return (
     <div className="grid grid-cols-[30%_70%] border-[1px] rounded-[8px] overflow-hidden p-4 relative">
       <div className="w-[174px] h-[174px] relative rounded-[4px] overflow-hidden">
@@ -36,6 +40,7 @@ const Card = (props: Props) => {
               From <span className="font-bold text-[16px]">{props?.data?.priceAdult}VND</span>
             </div>
             <div
+              onClick={() => router.push(`/tours/${props?.data?.id}`)}
               className="flex gap-2 items-center border-[1px] border-[#006ce4]
                  py-2 px-3 rounded-[4px] text-[14px] text-[#006ce4] cursor-pointer hover:bg-[#fafafa]"
             >
