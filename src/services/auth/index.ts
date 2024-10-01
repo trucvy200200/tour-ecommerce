@@ -19,7 +19,7 @@ export const registerService = (payload: IReqRegister): Promise<any> => {
   }) as any
 }
 
-export const sendMailForgotPassword = (payload: IReqVerifyMail): Promise<ReturnResponse<any>> => {
+export const sendMailForgotPassword = (payload: IReqVerifyMail): Promise<any> => {
   return API.post(`/forgot-password`, {
     body: { ...payload }
   }) as any

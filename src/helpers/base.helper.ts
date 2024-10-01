@@ -95,5 +95,5 @@ export const isSpecialCustomer = () => {
   const userData = getFromLocalStorage("userData")
   const token = getFromCookieWithName(null, KEY_COOKIE.TOKEN)
 
-  return token && isLogin && userData?.userId
+  return token && isLogin && userData?.id
 }

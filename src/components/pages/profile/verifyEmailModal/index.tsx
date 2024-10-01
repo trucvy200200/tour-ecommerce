@@ -1,15 +1,16 @@
 import { Modal } from "antd"
 import React, { useState } from "react"
 import styled from "styled-components"
-// import InputBorder from "components/common/input-border"
+import InputBorder from "@/components/common/input-border"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 // import { sendCodeVerifyEmailService } from "services/account"
 // import { notifyError, notifySuccess } from "helpers/toast.helper"
-// import CountdownCircle from "components/common/countdownCircle"
+import CountdownCircle from "@/components/common/countdownCircle"
 import ErrorText from "@/components/common/error-text"
 import { emailPattern } from "@/constants/base.constant"
+
 const ModalStyled = styled(Modal)`
   padding: 10px;
   .ant-modal-content {
@@ -78,7 +79,7 @@ const ModalVerifyEmail = (props: any) => {
   }
   return (
     <ModalStyled centered open={isOpen} title={"We will send code to your email"} onCancel={() => setOpenModal(false)} okButtonProps={{ style: { display: "none" } }} zIndex={999999}>
-      {/* <form className="mt-[30px] md:mt-[10px] font-sans" onSubmit={handleSubmit(submitVerifyCode)}>
+      <form className="mt-[30px] md:mt-[10px] font-sans" onSubmit={handleSubmit(submitVerifyCode)}>
         <div className="bg-[white] relative rounded-[8px]">
           <div className="mt-[25px] text-[14px] sm:text-[18px]">
             <div className={`relative w-full h-[45px] bg-white bg-opacity-90 rounded-lg border-[2px] border-[#0060FF] border-opacity-10`}>
@@ -111,18 +112,18 @@ const ModalVerifyEmail = (props: any) => {
               classNameInput="!p-[10px] border border-[#0f75bc] bg-[white]"
               name="code"
               type="text"
-              placeholder={`6 ${t.digits}`}
+              placeholder={`6 digits`}
             />
           </div>
           <div>
             <input
               type="submit"
               className="text-[14px] h-[44px] sm:text-[18px] mb-[10px] bg-[#004aad] shadow-lg text-white w-full py-[10px] mt-[18px] rounded-[4px] cursor-pointer"
-              value={t.verifyCode}
+              value={"Verify code"}
             />
           </div>
         </div>
-      </form> */}
+      </form>
     </ModalStyled>
   )
 }
