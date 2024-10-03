@@ -12,10 +12,16 @@ export interface IReqRegister {
 
 export interface IReqVerifyMail {
   email: string
-  verificationCode?: string
+  code?: string
   password?: string
 }
 
 export interface IReqLogout {
   id: string
+}
+
+export interface IReqResetPassword {
+  id: string
+  oldPassword: string
+  newPassword: string
 }

@@ -1,6 +1,6 @@
 import { USER_MODEL } from "@/models/user.model"
 import { createHook, createStore } from "react-sweet-state"
-import { getUserById, uploadAvatar } from "./user.action"
+import { getUserById, uploadAvatar, updateProfile } from "./user.action"
 
 export type State = {
   user: USER_MODEL
@@ -16,13 +16,14 @@ const initialState: State = {
     birthday: "",
     gender: "",
     address: "",
-    avatar: ""
+    urlAvatar: ""
   }
 }
 
 const actions = {
   getUserById,
-  uploadAvatar
+  uploadAvatar,
+  updateProfile
 }
 
 const Store = createStore({

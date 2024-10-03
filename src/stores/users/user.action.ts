@@ -1,6 +1,8 @@
 import { getUserByIdService, updateProfileService, uploadAvatarService } from "@/services/users"
 import { State } from "./index"
 import { BaseAction } from ".."
+import { notifyError } from "@/helpers/toast.helper"
+import { IReqUpdateProfile } from "@/services/users/user.interface"
 
 type Actions = BaseAction<State>
 
@@ -21,22 +23,23 @@ export const getUserById = (tourId: string) => {
   }
 }
 
-export const updateProfile = (data: any) => {
-  return async (actions: Actions) => {
+export const updateProfile =
+  (payload: IReqUpdateProfile, handleSuccess: () => void, handleError: () => void) =>
+  async ({ dispatch, getState, setState }: Actions) => {
     try {
-      const res = await updateProfileService(data)
-      actions.setState({
-        ...actions.getState(),
-        user: res?.userInfo
-      })
+      const result = await updateProfileService(payload)
+      if (result?.errCode === 200) {
+        handleSuccess()
+      } else {
+        handleError()
+      }
+      return result
     } catch (error: any) {
-      actions.setState({
-        ...actions.getState(),
-        user: {}
-      })
+      const result = error?.response
+      notifyError("Server error")
+      return result
     }
   }
-}
 
 export const uploadAvatar = (file: any, id: string) => async () => {
   if (!file || typeof file === "string") return file

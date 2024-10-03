@@ -8,7 +8,7 @@ import "flatpickr/dist/flatpickr.css"
 import ForgotPasswordModal from "@/components/pages/profile/resetPasswordModal"
 import VerifyEmailModal from "@/components/pages/profile/verifyEmailModal"
 import { useUser } from "@/stores/users"
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import * as yup from "yup"
 import ErrorText from "@/components/common/error-text"
 import { USER_MODEL } from "@/models/user.model"
@@ -21,6 +21,8 @@ import { useLogin } from "@/hooks/useLogin"
 import { styled } from "@mui/material/styles"
 import { convertToBase64, base64ToFile } from "@/utilities/Utils"
 import { FaXmark, FaCheck } from "react-icons/fa6"
+import { sendMailOTP, checkOTP } from "@/services/auth"
+import Loading from "@/components/common/loading-background"
 
 const ProfilePicture = styled("img")(({ theme }) => ({
   maxWidth: "100%",
@@ -50,12 +52,14 @@ const Profile = () => {
   const schema = yup.object().shape({
     email: yup.string().email("Email invalid"),
     name: yup.string().required("Please enter your full name"),
-    phone: yup.string().required("Please enter your phone number").matches(phonePattern, "Phone invalid"),
+    address: yup.string().required("Please enter your address"),
+    phone: yup.string(),
     gender: yup.string().required("Please select your gender")
   })
   const [verifyCode, setVerifyCode] = useState<string>("")
   const [avatar, setAvatar] = useState<string>("")
   const [editAvatar, setEditAvatar] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const {
     reset,
@@ -87,9 +91,11 @@ const Profile = () => {
       if (result.errCode === 200) {
         setValue("gender", result.userInfo?.gender)
         setValue("name", result.userInfo?.name)
+        setValue("address", result.userInfo?.address)
         setValue("phone", result.userInfo?.phone)
         setBirthday(convertDateDefaultV3(result.userInfo?.birthday))
         setProfile(result.userInfo)
+        setAvatar(result.userInfo?.urlAvatar)
       }
     } catch {}
   }
@@ -111,7 +117,7 @@ const Profile = () => {
         apiGetProfile()
       },
       () => {
-        notifyError("Update profile fail")
+        notifyError("Update profile failed")
       }
     )
   }
@@ -122,50 +128,52 @@ const Profile = () => {
       return
     }
     const date = birthday.split("/")
-    const oldData = profile
 
     const newData = {
       ...data,
-      birthday: renderTimeCallAPI(date[2] + "-" + date[1] + "-" + date[0]),
+      fullName: getValues("name"),
+      birthday: date[1] + "-" + date[0] + "-" + date[2],
+      id: profile?.id,
       email: getValues("email") ? getValues("email") : profile?.email
     }
 
-    if (newData["name"] === oldData?.name) {
-      delete newData["name"]
-    }
-    if (newData["email"] === oldData?.email) {
-      delete newData["email"]
-    }
-    if (newData["phone"] === oldData?.phone) {
-      delete newData["phone"]
-    }
-    if (birthday === convertDateDefaultV3(oldData?.birthday as string)) {
-      delete newData["birthday"]
-    }
-    if (newData["gender"] === oldData?.gender) {
-      delete newData["gender"]
-    }
-
     if (newData && Object.keys(newData).length > 0) {
-      // actionsAccount.updateProfile(newData, handleSuccess, handleError)
+      actionsAccount.updateProfile(newData, handleSuccess, handleError)
     } else {
       setEditField({})
     }
   }
-  const handleUpdateEmail = (verificationCode: string, handleSuccess: () => void, handleError: () => void) => {
+
+  const handleUpdateEmail = async (verificationCode: string, handleSuccess: () => void, handleError: () => void) => {
     const date = birthday.split("/")
     const newData = {
       ...getValues(),
-      //   birthday: renderTimeCallAPI(date[2] + "-" + date[1] + "-" + date[0]),
-      verificationCode: verificationCode
+      fullName: getValues("name"),
+      id: profile?.id,
+      birthday: date[1] + "-" + date[0] + "-" + date[2]
     }
-    apiUpdateProfile(
-      newData,
-      () => {
-        handleSuccess(), setEditField({}), apiGetProfile(), reset({ ...getValues(), email: "" })
-      },
-      handleError
-    )
+    setLoading(true)
+
+    await checkOTP({
+      email: profile?.email as string,
+      code: verificationCode
+    })
+      .then(async (res) => {
+        setLoading(false)
+        if (res?.errCode === 200) {
+          apiUpdateProfile(
+            newData,
+            () => {
+              handleSuccess(), setEditField({}), apiGetProfile(), reset({ ...getValues(), email: "" })
+            },
+            handleError
+          )
+        } else notifyError("Wrong verification code")
+      })
+      .catch(() => {
+        setLoading(false)
+        notifyError("Server error")
+      })
   }
 
   const handleShowEditBox = (name: string) => {
@@ -178,6 +186,7 @@ const Profile = () => {
     switch (name) {
       case "name":
       case "email":
+      case "address":
       case "phone":
         if (getValues(name) === "") {
           setValue(name, profile?.[name] as string)
@@ -199,12 +208,18 @@ const Profile = () => {
     const avatarFile = base64ToFile(avatar?.split(",")[1], "avatar.jpg", "image/jpg")
 
     if (avatarFile) {
-      actionsAccount.uploadAvatar(avatarFile, profile?.id)
+      actionsAccount.uploadAvatar(avatarFile, profile?.id).then((res) => {
+        if (res?.errCode === 200) {
+          notifySuccess("Upload avatar successfully")
+          setEditAvatar(false)
+        } else notifyError("Upload avatar failed")
+      })
     }
   }
 
   return isSpecial ? (
     <div className="container px-2.5 py-[24px] rounded-[8px] min-h-[300px] mt-[140px] flex-1">
+      {loading && <Loading />}
       <form onSubmit={handleSubmit(handleSaveChanges)} className="flex flex-col h-full justify-between">
         <div className="group mb-5 rounded-[100rem] shrink-0 w-full flex justify-center items-center ">
           <div className="relative w-[150px] h-[150px]">
@@ -396,6 +411,46 @@ const Profile = () => {
             </div>
           </div>
           <div className="flex flex-col gap-2 md:gap-5">
+            <div className="flex items-center justify-between gap-2">
+              <div className="font-[500] text-[18px]">Address</div>
+              <div
+                onClick={() => {
+                  handleShowEditBox("address")
+                }}
+                className="flex items-center justify-center w-[32px] h-[32px] rounded-full bg-[#16447F] bg-opacity-5 text-[16px] cursor-pointer"
+              >
+                <Image width={16} height={16} src={editField["address"] ? "/icons/ic-close-edit.svg" : "/icons/ic-edit.svg"} alt="edit" />
+              </div>
+            </div>
+            {editField["address"] ? (
+              <>
+                <div className="relative">
+                  <input
+                    {...register("address")}
+                    type="text"
+                    name="address"
+                    defaultValue={getValues("address") || ""}
+                    placeholder={"Please enter address"}
+                    onChange={(e: any) => {
+                      const value = e.target.value
+                      clearErrors("address")
+                      setValue("address", value)
+                    }}
+                    className="placeholder-gray-500 outline-none pr-10 border border-[#000000] rounded-[10px] p-[10px] w-full bg-transparent"
+                  />
+                  <div className="absolute inset-y-0 right-3 flex items-center cursor-pointer">
+                    {getValues("address") && <Image onClick={() => reset({ ...getValues(), address: "" })} src={"/icons/ic-cancel.svg"} alt="edit" width={24} height={24} />}
+                  </div>
+                </div>
+                {errors["address"] && <ErrorText>{errors["address"].message}</ErrorText>}
+              </>
+            ) : profile?.address ? (
+              <div className="text-[16px] border border-[#000000] rounded-[10px] p-[10px] w-full bg-transparent">{profile?.address}</div>
+            ) : (
+              <div className="text-gray-500 text-[16px]"> {"Please enter address"}</div>
+            )}
+          </div>
+          <div className="flex flex-col gap-2 md:gap-5">
             <div className="flex items-center gap-2">
               <div className="font-[500] text-[18px]">Gender</div>
             </div>
@@ -490,10 +545,12 @@ const Profile = () => {
         <div className="flex items-center justify-end w-full gap-[20px] flex-wrap max-md:flex-col">
           <button
             type="submit"
-            disabled={editField["name"] || editField["email"] || editField["phone"] || editField["birthday"] || editField["gender"] || editField["noChange"] ? false : true}
+            disabled={editField["name"] || editField["email"] || editField["address"] || editField["birthday"] || editField["gender"] || editField["noChange"] ? false : true}
             className={`${
-              !(editField["name"] || editField["email"] || editField["phone"] || editField["birthday"] || editField["gender"] || editField["noChange"]) && "opacity-50"
-            } cursor-pointer text-[18px] rounded-[4px] bg-transparent 
+              !(editField["name"] || editField["email"] || editField["address"] || editField["birthday"] || editField["gender"] || editField["noChange"])
+                ? "opacity-50 cursor-not-allowed"
+                : "cursor-pointer "
+            } text-[18px] rounded-[4px] bg-transparent 
               w-[320px] h-[40px] text-black border border-[#050226] items-center flex justify-center max-md:w-full`}
           >
             Save changes

@@ -7,5 +7,5 @@ export interface USER_MODEL {
   birthday: string
   gender: string
   address: string
-  avatar: string
+  urlAvatar: string
 }

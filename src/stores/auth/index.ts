@@ -1,4 +1,4 @@
-import { loginAsync, registerAsync, logoutAsync, setUser } from "./auth.action"
+import { loginAsync, registerAsync, logoutAsync, setUser, changePassword } from "./auth.action"
 import { createHook, createStore } from "react-sweet-state"
 import { selector } from "./auth.selector"
 import { USER_MODEL } from "@/models/user.model"
@@ -14,17 +14,23 @@ const initialState: State = {
     id: "",
     name: "",
     email: "",
-    role: ""
+    role: "",
+    phone: "",
+    birthday: "",
+    gender: "",
+    address: "",
+    avatar: ""
   },
   isLogin: false,
-  isRegister: false,
+  isRegister: false
 }
 
 const actions = {
   logoutAsync,
   loginAsync,
   registerAsync,
-  setUser
+  setUser,
+  changePassword
 }
 
 const Store = createStore({

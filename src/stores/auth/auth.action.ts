@@ -2,11 +2,10 @@ import { BaseAction } from ".."
 import { State } from "./index"
 import { notifyError, notifySuccess } from "@/helpers/toast.helper"
 import { KEY_COOKIE } from "@/constants/key-cookie.constant"
-import { LOGIN_ERRORS } from "@/constants/base.constant"
-import { loginService, registerService, logoutService } from "@/services/auth"
+import { loginService, registerService, logoutService, resetPasswordService } from "@/services/auth"
 import { MESS_LOGIN, MESS_REGISTER } from "@/constants/message-notification"
 import { saveToCookie, saveToLocalStorage, removeFromLocalStorage, removeCookie, getFromLocalStorage } from "@/helpers/base.helper"
-import { IReqLogin, IReqRegister, IReqLogout } from "@/services/auth/auth.interface"
+import { IReqLogin, IReqRegister, IReqLogout, IReqResetPassword } from "@/services/auth/auth.interface"
 
 type Actions = BaseAction<State>
 
@@ -89,6 +88,25 @@ export const logoutAsync =
     } catch (error: any) {
       const result = error?.response
       notifyError("Server error")
+      return result
+    }
+  }
+
+export const changePassword =
+  (payload: IReqResetPassword, handleSuccess: () => void, handleError: () => void) =>
+  async ({ dispatch, getState, setState }: Actions) => {
+    try {
+      const result = await resetPasswordService(payload)
+      if (result?.errCode === 200) {
+        notifySuccess("Reset password successfully" as any)
+        handleSuccess()
+      } else {
+        handleError()
+      }
+      return result
+    } catch (error: any) {
+      const result = error?.response
+      notifyError("Reset password failed")
       return result
     }
   }

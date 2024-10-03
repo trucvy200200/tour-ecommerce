@@ -43,7 +43,7 @@ const ForgotPassword = (props: Props) => {
         <div>
           <div className="text-[20px] font-bold">Email</div>
           <InputBorder
-            classNameWrapper="border-[1px] border-[#000] px-3 py-2 rounded-[8px] w-full"
+            classNameInput="border-[1px] border-[#000] px-3 py-2 rounded-[8px] w-full"
             register={register("email")}
             name="email"
             type="email"

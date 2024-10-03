@@ -16,7 +16,7 @@ const UserDropdown = () => {
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutsideDropdown)
-  }, [catMenu])
+  }, [catMenu, showMenu])
 
   useEffect(() => {
     actionUser.getUserById(userData?.id)
@@ -39,7 +39,7 @@ const UserDropdown = () => {
       </div>
       <div className="text-[14px]">{storeUser.user?.name}</div>
       {showMenu && userRoutes && (
-        <div className={`rounded-[8px] shadow-[0_0_12px_-3px_rgba(0,0,0,.4)] absolute top-[50px] bg-[white] flex flex-col min-w-[200px] `}>
+        <div className={`rounded-[8px] shadow-[0_0_12px_-3px_rgba(0,0,0,.4)] absolute top-[50px] right-0 bg-[white] flex flex-col min-w-[200px] `}>
           {userRoutes?.map((item: any, index: number) => {
             return (
               <a href={item.url} key={index} className="text-left px-2 py-3 hover:text-[#166699] text-[black] font-normal flex gap-2 items-center">

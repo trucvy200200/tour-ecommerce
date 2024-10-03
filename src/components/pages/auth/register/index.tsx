@@ -11,6 +11,7 @@ import Loading from "@/components/common/loading-background"
 import { notifyError } from "@/helpers/toast.helper"
 import CountdownCircle from "@/components/common/countdownCircle"
 import ErrorText from "@/components/common/error-text"
+import { sendMailOTP, checkOTP } from "@/services/auth"
 
 interface Props {
   isOpen: boolean
@@ -49,41 +50,52 @@ const Register = (props: Props) => {
   } = useForm({ resolver: yupResolver(schemaRegister) })
 
   const handleSendMailRegister = async (setLoading: any, successFunc: any, errorFunc: any) => {
-    // setLoading(true)
-    // try {
-    //   const result = await sendMailOTP({ email: getValues("email") })
-    //   setLoading(false)
-    //   if (!result?.error) {
-    //     clearErrors("verificationCode")
-    //     successFunc(t.sendMailSuccess)
-    //   } else {
-    //     errorFunc(t[result?.message] || t[MESS_REGISTER.ERROR_SERVER])
-    //   }
-    // } catch (error: any) {
-    //   console.log(error)
-    //   errorFunc(t[MESS_REGISTER.ERROR_SERVER])
-    //   setLoading(false)
-    // }
+    setLoading(true)
+    try {
+      const result = await sendMailOTP({ email: getValues("email") })
+      setLoading(false)
+      if (result?.errCode === 200) {
+        clearErrors("verificationCode")
+        successFunc("Send mail success")
+      } else {
+        errorFunc(result?.message || "Send failed")
+      }
+    } catch (error: any) {
+      console.log(error)
+      errorFunc("Send failed")
+      setLoading(false)
+    }
   }
 
   const onSubmit = async (data: any) => {
     if (!gender) return notifyError("Please select gender")
 
     const { confirmPassword, ...rest } = data
+
     setLoading(true)
 
-    const result = await actionAuth.registerAsync({ ...rest })
-    setLoading(false)
-
-    try {
-      if (result?.errCode === 200) {
-        props.setOpenModal(false)
-        props.setOpenLoginModal(true)
-        reset()
-      }
-    } catch (e) {
-      console.error(e)
-    }
+    await checkOTP({
+      email: getValues("email"),
+      code: getValues("verificationCode")
+    })
+      .then(async (res) => {
+        if (res?.errCode === 200) {
+          const result = await actionAuth.registerAsync({ ...rest, gender })
+          setLoading(false)
+          if (result?.errCode === 200) {
+            props.setOpenModal(false)
+            props.setOpenLoginModal(true)
+            reset()
+          }
+        } else {
+          setLoading(false)
+          notifyError("Wrong verification code")
+        }
+      })
+      .catch(() => {
+        setLoading(false)
+        notifyError("Wrong verification code")
+      })
   }
 
   return (
@@ -96,7 +108,7 @@ const Register = (props: Props) => {
             <div>
               <div className="text-[20px] font-bold">Full name</div>
               <InputBorder
-                classNameWrapper="border-[1px] border-[#000] px-3 py-2 rounded-[8px] w-full"
+                classNameInput="border-[1px] border-[#000] px-3 py-2 rounded-[8px] w-full"
                 register={register("fullName")}
                 name="fullName"
                 type="text"
@@ -109,7 +121,7 @@ const Register = (props: Props) => {
             <div>
               <div className="text-[20px] font-bold">Address</div>
               <InputBorder
-                classNameWrapper="border-[1px] border-[#000] px-3 py-2 rounded-[8px] w-full"
+                classNameInput="border-[1px] border-[#000] px-3 py-2 rounded-[8px] w-full"
                 register={register("address")}
                 name="address"
                 type="text"
@@ -118,6 +130,45 @@ const Register = (props: Props) => {
                 clearErrors={clearErrors}
                 setValue={setValue}
               />
+            </div>
+            <div>
+              <div className="text-[20px] font-bold">Password</div>
+              <InputBorder
+                classNameInput="border-[1px] border-[#000] px-3 py-2 rounded-[8px] w-full"
+                register={register("password")}
+                name="password"
+                type="password"
+                placeholder={"Enter your password"}
+                errors={errors}
+                clearErrors={clearErrors}
+                setValue={setValue}
+              />
+            </div>
+            <div>
+              <div className="text-[20px] font-bold">Confirm password</div>
+              <InputBorder
+                classNameInput="border-[1px] border-[#000] px-3 py-2 rounded-[8px] w-full"
+                register={register("confirmPassword")}
+                name="confirmPassword"
+                type="password"
+                placeholder={"Enter confirm password"}
+                errors={errors}
+                clearErrors={clearErrors}
+                setValue={setValue}
+              />
+            </div>
+            <div>
+              <div className="text-[20px] font-bold">Gender</div>
+              <div className="flex gap-6">
+                <div className="flex gap-3 items-center text-[16px]">
+                  <input type="radio" id="gender" checked={gender === "male"} value="male" onChange={() => setGender("male")} className="h-[20px] w-[20px]" />
+                  Male
+                </div>
+                <div className="flex gap-3 items-center text-[16px]">
+                  <input type="radio" id="gender" checked={gender === "female"} value="female" onChange={() => setGender("female")} className="h-[20px] w-[20px]" />
+                  Female
+                </div>
+              </div>
             </div>
             <div>
               <div className="text-[20px] font-bold">Email</div>
@@ -151,11 +202,10 @@ const Register = (props: Props) => {
             </div>
             {isSend && (
               <div className="w-full flex-col justify-start items-start gap-2 inline-flex mb-[20px]">
-                <div className="text-[#6b697f] text-base font-semibold leading-tight tracking-tight">{t["Verification code"]}</div>
+                <div className="text-[20px] font-bold">Verification code</div>
                 <div className="w-full">
                   <InputBorder
-                    classNameWrapper="relative w-full text-[#9997a6] h-[45px] bg-white rounded-lg border-[1px] border-[#0F75BC]"
-                    classNameInput="h-full bg-white"
+                    classNameInput="border-[1px] border-[#000] px-3 py-2 rounded-[8px] w-full"
                     register={register("verificationCode")}
                     name="verificationCode"
                     type="text"
@@ -167,46 +217,8 @@ const Register = (props: Props) => {
                 </div>
               </div>
             )}
-            <div>
-              <div className="text-[20px] font-bold">Password</div>
-              <InputBorder
-                classNameWrapper="border-[1px] border-[#000] px-3 py-2 rounded-[8px] w-full"
-                register={register("password")}
-                name="password"
-                type="password"
-                placeholder={"Enter your password"}
-                errors={errors}
-                clearErrors={clearErrors}
-                setValue={setValue}
-              />
-            </div>
-            <div>
-              <div className="text-[20px] font-bold">Confirm password</div>
-              <InputBorder
-                classNameWrapper="border-[1px] border-[#000] px-3 py-2 rounded-[8px] w-full"
-                register={register("confirmPassword")}
-                name="confirmPassword"
-                type="password"
-                placeholder={"Enter confirm password"}
-                errors={errors}
-                clearErrors={clearErrors}
-                setValue={setValue}
-              />
-            </div>
-            <div>
-              <div className="text-[20px] font-bold">Gender</div>
-              <div className="flex gap-6">
-                <div className="flex gap-3 items-center text-[16px]">
-                  <input type="radio" id="gender" checked={gender === "male"} value="male" onChange={() => setGender("male")} className="h-[20px] w-[20px]" />
-                  Male
-                </div>
-                <div className="flex gap-3 items-center text-[16px]">
-                  <input type="radio" id="gender" checked={gender === "female"} value="female" onChange={() => setGender("female")} className="h-[20px] w-[20px]" />
-                  Female
-                </div>
-              </div>
-            </div>
           </div>
+
           <button type="submit" className="mt-2 font-bold text-[20px] py-2 w-full bg-[#166699] text-center text-white cursor-pointer rounded-[8px]">
             Register
           </button>

@@ -7,7 +7,8 @@ import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { passwordPattern } from "@/constants/base.constant"
 // import { changePassword } from "stores/account/account.action"
-// import { useAccount } from "stores/account"
+import { useAuth } from "@/stores/auth"
+
 const ModalStyled = styled(Modal)`
   padding: 10px;
   .ant-modal-content {
@@ -31,7 +32,7 @@ const ModalStyled = styled(Modal)`
 const ModalReset = (props: any) => {
   const { isOpen, setOpenModal } = props
   const [checkDisabled, setCheckDisabled] = React.useState<boolean>(false)
-  // const [, actionAccount] = useAccount()
+  const [, actionAuth] = useAuth()
   const schemaChangePassword = yup.object().shape({
     oldPassword: yup.string().required("Please enter old password").matches(passwordPattern, "Password invalid"),
     newPassword: yup.string().required("Please enter new password").matches(passwordPattern, "Password invalid"),
@@ -54,21 +55,20 @@ const ModalReset = (props: any) => {
   })
 
   const onSubmit = async (data: any) => {
-    // actionAccount.changePassword(
-    //   { oldPassword: data.oldPassword, newPassword: data.newPassword },
-    //   t,
-    //   () => {
-    //     setOpenModal(false)
-    //     reset({
-    //       oldPassword: "",
-    //       newPassword: "",
-    //       confirmPassword: ""
-    //     })
-    //   },
-    //   () => {
-    //     setError("oldPassword", { type: "manual", message: t["Old password is incorrect"] })
-    //   }
-    // )
+    actionAuth.changePassword(
+      { id: JSON.parse(localStorage.getItem("userData") as string)?.id, oldPassword: data.oldPassword, newPassword: data.newPassword },
+      () => {
+        setOpenModal(false)
+        reset({
+          oldPassword: "",
+          newPassword: "",
+          confirmPassword: ""
+        })
+      },
+      () => {
+        setError("oldPassword", { type: "manual", message: "Old password is incorrect" })
+      }
+    )
   }
   return (
     <ModalStyled centered open={isOpen} title={"Reset password"} onCancel={() => setOpenModal(false)} okButtonProps={{ style: { display: "none" } }} zIndex={999999}>

@@ -1,12 +1,12 @@
 import { Modal } from "antd"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import InputBorder from "@/components/common/input-border"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
-// import { sendCodeVerifyEmailService } from "services/account"
-// import { notifyError, notifySuccess } from "helpers/toast.helper"
+import { sendMailOTP } from "@/services/users"
+import { notifyError, notifySuccess } from "@/helpers/toast.helper"
 import CountdownCircle from "@/components/common/countdownCircle"
 import ErrorText from "@/components/common/error-text"
 import { emailPattern } from "@/constants/base.constant"
@@ -36,7 +36,8 @@ const ModalVerifyEmail = (props: any) => {
   const [isSend, setIsSend] = useState(false)
   const [_, setIsDisabled] = useState(false)
   const schema = yup.object().shape({
-    code: yup.string().required("Please enter your code")
+    code: yup.string().required("Please enter your code"),
+    email: yup.string().email("Email is invalid").required("Please enter your email")
   })
   const {
     reset,
@@ -48,34 +49,39 @@ const ModalVerifyEmail = (props: any) => {
     clearErrors,
     setError
   } = useForm({ resolver: yupResolver(schema) })
+
+  useEffect(() => {
+    setValue("email", props.profile.email)
+  }, [props.profile.email])
+
   const handleSendCode = async (setLoading: any, successFunc: any, errorFunc: any) => {
-    // setLoading(true)
-    // try {
-    //   const result = await sendCodeVerifyEmailService({ email: props.profile.email })
-    //   setLoading(false)
-    //   if (!result?.error) {
-    //     successFunc(t.sendMailSuccess)
-    //   } else {
-    //     setError("email", { type: "manual", message: t[result?.message] })
-    //   }
-    // } catch (error: any) {
-    //   console.log(error)
-    //   errorFunc(t.errorServer)
-    //   setLoading(false)
-    // }
+    setLoading(true)
+    try {
+      const result = await sendMailOTP({ email: props.profile.email })
+      setLoading(false)
+      if (result?.errCode === 200) {
+        successFunc("Send mail success")
+      } else {
+        setError("email", { type: "manual", message: result?.message })
+      }
+    } catch (error: any) {
+      console.log(error)
+      errorFunc("Server error")
+      setLoading(false)
+    }
   }
   const submitVerifyCode = () => {
-    // props.handleUpdateEmail(
-    //   getValues("code"),
-    //   () => {
-    //     notifySuccess(t["Update profile successfully"])
-    //     setOpenModal(false)
-    //     reset({ code: "" })
-    //   },
-    //   () => {
-    //     setError("code", { type: "manual", message: t["Invalid code"] })
-    //   }
-    // )
+    props.handleUpdateEmail(
+      getValues("code"),
+      () => {
+        notifySuccess("Update profile successfully")
+        setOpenModal(false)
+        reset({ code: "" })
+      },
+      () => {
+        setError("code", { type: "manual", message: "Invalid code" })
+      }
+    )
   }
   return (
     <ModalStyled centered open={isOpen} title={"We will send code to your email"} onCancel={() => setOpenModal(false)} okButtonProps={{ style: { display: "none" } }} zIndex={999999}>
