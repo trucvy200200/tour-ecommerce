@@ -17,7 +17,7 @@ const UserDropdown = dynamic(() => import("./user-dropdown"), {
 
 export default function Header() {
   const pathName = usePathname()
-  const [isPageScroll, setIsPageScroll] = React.useState(pathName === "/" ? false : true)
+  const [isPageScroll, setIsPageScroll] = React.useState(pathName === "/" || pathName === "/flights" ? false : true)
   const [showSubmenu, setShowSubmenu] = React.useState(-1)
   const [showSubHeader, setShowSubHeader] = React.useState(true)
   const [isOpen, setIsOpen] = React.useState(false)
@@ -31,8 +31,7 @@ export default function Header() {
   }, [])
 
   React.useEffect(() => {
-    setIsPageScroll(true)
-    setShowSubHeader(true)
+    setIsPageScroll(pathName === "/" || pathName === "/flights" ? false : true)
     if (pathName === "/" || pathName === "/flights") {
       const handleScroll = () => {
         if (window.scrollY >= 70) {
@@ -60,7 +59,7 @@ export default function Header() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathName])
+  }, [pathName, window.location.href])
 
   const handleShowSubmenu = (index: Number) => {
     if (showSubmenu === -1) return "hidden"
