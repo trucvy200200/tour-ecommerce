@@ -31,9 +31,9 @@ export default function Header() {
   }, [])
 
   React.useEffect(() => {
+    setIsPageScroll(true)
+    setShowSubHeader(true)
     if (pathName === "/" || pathName === "/flights") {
-      setIsPageScroll(false)
-      setShowSubHeader(true)
       const handleScroll = () => {
         if (window.scrollY >= 70) {
           setIsPageScroll(true)
