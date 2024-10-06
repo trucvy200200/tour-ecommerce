@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation"
 import { FaCircleXmark } from "react-icons/fa6"
 import { FaRegCalendarAlt } from "react-icons/fa"
+import { CiEdit } from "react-icons/ci"
 
 const MyTripDetail = () => {
   const router = useRouter()
@@ -74,6 +75,10 @@ const MyTripDetail = () => {
           <div className="flex items-center gap-2 mt-3">
             <FaRegCalendarAlt size={16} />
             <div className="cursor-pointer text-[#006ce4] underline">Update date</div>
+          </div>
+          <div className="flex items-center gap-2 mt-3">
+            <CiEdit size={16} />
+            <div className="cursor-pointer text-[#006ce4] underline">Update ticket information</div>
           </div>
           <div className="text-[14px] mt-4">
             See more about <span className="text-[#006ce4] underline cursor-pointer">Cancellation Policy</span>
