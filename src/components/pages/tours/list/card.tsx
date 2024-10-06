@@ -13,15 +13,17 @@ const Card = (props: Props) => {
   const router = useRouter()
 
   return (
-    <div className="grid grid-cols-[30%_70%] border-[1px] rounded-[8px] overflow-hidden p-4 relative">
-      <div className="w-[174px] h-[174px] relative rounded-[4px] overflow-hidden">
-        <Image src={props?.data?.images[0]?.urlImage || ""} fill objectFit="cover" alt="image" />
+    <div className="grid grid-cols-[30%_70%] border-[1px] gap-4 rounded-[8px] overflow-hidden max-md:p-2 p-4 relative max-md:grid-cols-1">
+      <div className="max-md:flex max-md:justify-center">
+        <div className="w-[174px] h-[174px] max-md:w-[120px] max-md:h-[120px] relative rounded-[4px] overflow-hidden">
+          <Image src={props?.data?.images[0]?.urlImage || ""} fill objectFit="cover" alt="image" />
+        </div>
       </div>
       <div className="flex gap-1 flex-col">
         <div className="text-[14px]">{props?.data?.location}</div>
         <div className="capitalize font-bold text-[20px]">{props?.data?.name}</div>
         <div
-          className="text-[14px] decoration-none line-clamp-2 break-word"
+          className="text-[14px] decoration-none line-clamp-2 break-word text-wrap"
           dangerouslySetInnerHTML={{
             __html: props?.data?.description
           }}
@@ -34,7 +36,7 @@ const Card = (props: Props) => {
           <IoStar size={16} color="#FFC107" />
           4.4 <span className="font-normal">(244 reviews)</span>
         </div>
-        <div className="absolute bottom-[20px] right-[20px]">
+        <div className="absolute bottom-[20px] right-[20px] max-md:relative max-md:flex max-md:justify-end max-md:bottom-0 max-md:right-0">
           <div className="text-right">
             <div className="text-[12px] mb-1">
               From <span className="font-bold text-[16px]">{props?.data?.priceAdult}VND</span>
