@@ -46,7 +46,6 @@ export const uploadAvatar = (file: any, id: string) => async () => {
   const formData = new FormData()
   formData.append("id", id)
   formData.append("image", file)
-  console.log(formData.get("id"))
 
   return await uploadAvatarService(formData)
 }
