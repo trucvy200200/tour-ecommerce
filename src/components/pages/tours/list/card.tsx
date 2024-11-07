@@ -32,10 +32,10 @@ const Card = (props: Props) => {
           <CiTimer size={16} />
           Duration: {props?.data?.duration} {props?.data?.duration > 1 ? "days" : "day"}
         </div>
-        <div className="text-[14px] flex gap-1 items-center font-bold">
+        {/* <div className="text-[14px] flex gap-1 items-center font-bold">
           <IoStar size={16} color="#FFC107" />
           4.4 <span className="font-normal">(244 reviews)</span>
-        </div>
+        </div> */}
         <div className="absolute bottom-[20px] right-[20px] max-md:relative max-md:flex max-md:justify-end max-md:bottom-0 max-md:right-0">
           <div className="text-right">
             <div className="text-[12px] mb-1">

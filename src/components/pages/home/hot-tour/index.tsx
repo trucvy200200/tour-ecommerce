@@ -3,10 +3,11 @@ import * as React from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import styled from "styled-components"
 import { Navigation, Pagination, Autoplay } from "swiper/modules"
-import Card from './Card'
+import Card from "./Card"
+import { useTours } from "@/stores/tour"
 
 import "swiper/css"
-import 'swiper/css/navigation'
+import "swiper/css/navigation"
 import "swiper/css/pagination"
 
 const SwiperStyled = styled(Swiper)`
@@ -14,16 +15,19 @@ const SwiperStyled = styled(Swiper)`
   padding-bottom: 70px !important;
   .swiper-slide {
     position: relative;
-    border-radius: 20px;
     cursor: default;
-    box-shadow:  0px 4px 10px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.15);
+    height: 300px;
+    @media (max-width: 1024px) {
+      height: 220px;
+    }
     .img-zoom {
       overflow: hidden;
       object-fit: cover;
       transition: all 4s ease;
     }
-    &:hover{
-      .img-zoom{
+    &:hover {
+      .img-zoom {
         transform: scale(1.2);
       }
     }
@@ -34,6 +38,11 @@ const SwiperStyled = styled(Swiper)`
   }
 `
 export default function HotTour() {
+  const [storeTours, actionTours] = useTours()
+
+  React.useEffect(() => {
+    actionTours.getHotTours({ perPage: 10, currentPage: 1 })
+  }, [])
 
   return (
     <div className="mx-2 my-[30px]">
@@ -46,15 +55,14 @@ export default function HotTour() {
             loop={true}
             autoplay={{
               delay: 3000
-            }
-            }
+            }}
             speed={2000}
             pagination={{
               clickable: true
             }}
             navigation={{
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev'
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev"
             }}
             slidesPerView={1}
             breakpoints={{
@@ -70,11 +78,14 @@ export default function HotTour() {
               440: {
                 slidesPerView: 1
               }
-            }}>
-            <SwiperSlide> <Card /></SwiperSlide>
-            <SwiperSlide> <Card /></SwiperSlide>
-            <SwiperSlide> <Card /></SwiperSlide>
-            <SwiperSlide> <Card /></SwiperSlide>
+            }}
+          >
+            {storeTours?.hotTours?.length > 0 &&
+              storeTours?.hotTours.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <Card data={item} />
+                </SwiperSlide>
+              ))}
           </SwiperStyled>
           <div className="swiper-button-next"></div>
           <div className="swiper-button-prev"></div>

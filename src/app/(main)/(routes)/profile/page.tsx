@@ -116,13 +116,13 @@ const Profile = () => {
         setEditField({})
         apiGetProfile()
       },
-      () => {
-        notifyError("Update profile failed")
+      (err: any) => {
+        notifyError(err || "Update profile failed")
       }
     )
   }
 
-  const apiUpdateProfile = (data: any, handleSuccess: () => void, handleError: () => void) => {
+  const apiUpdateProfile = (data: any, handleSuccess: () => void, handleError: (err: any) => void) => {
     if (editField["email"] && !getValues("email")) {
       setError("email", { type: "manual", message: "Please enter your email" })
       return
@@ -138,7 +138,7 @@ const Profile = () => {
     }
 
     if (newData && Object.keys(newData).length > 0) {
-      actionsAccount.updateProfile(newData, handleSuccess, handleError)
+      actionsAccount.updateProfile(newData, handleSuccess, (err) => handleError(err))
     } else {
       setEditField({})
     }
@@ -549,9 +549,13 @@ const Profile = () => {
           <div className="flex items-center justify-end w-full gap-[20px] flex-wrap max-md:flex-col">
             <button
               type="submit"
-              disabled={editField["name"] || editField["email"] || editField["address"] || editField["birthday"] || editField["gender"] || editField["noChange"] ? false : true}
+              disabled={
+                editField["phone"] || editField["name"] || editField["email"] || editField["address"] || editField["birthday"] || editField["gender"] || editField["noChange"]
+                  ? false
+                  : true
+              }
               className={`${
-                !(editField["name"] || editField["email"] || editField["address"] || editField["birthday"] || editField["gender"] || editField["noChange"])
+                !(editField["phone"] || editField["name"] || editField["email"] || editField["address"] || editField["birthday"] || editField["gender"] || editField["noChange"])
                   ? "opacity-50 cursor-not-allowed"
                   : "cursor-pointer "
               } text-[18px] rounded-[4px] bg-transparent 

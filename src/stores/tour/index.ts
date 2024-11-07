@@ -1,14 +1,19 @@
 import { TOUR_MODEL } from "@/models/tour.model"
 import { createHook, createStore } from "react-sweet-state"
-import { getTours, getToursById } from "./tour.action"
+import { getTours, getToursById, getHotTours, getLatestTours } from "./tour.action"
 
 export type State = {
   list: Array<TOUR_MODEL>
   detail: TOUR_MODEL
+  hotTours: Array<TOUR_MODEL>
+  latestTours: Array<TOUR_MODEL>
+  total: number
 }
 
 const initialState: State = {
   list: [],
+  hotTours: [],
+  latestTours: [],
   detail: {
     id: "",
     address: "",
@@ -23,12 +28,15 @@ const initialState: State = {
     priceAdult: 0,
     priceChild: 0,
     regulation: ""
-  }
+  },
+  total: 0
 }
 
 const actions = {
   getTours,
-  getToursById
+  getToursById,
+  getHotTours,
+  getLatestTours
 }
 
 const Store = createStore({

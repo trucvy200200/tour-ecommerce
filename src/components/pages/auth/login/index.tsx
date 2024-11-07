@@ -14,6 +14,7 @@ import InputBorder from "@/components/common/input-border"
 import { encrypt, decrypt, parseHexString } from "@/utilities/crypTo"
 import Loading from "@/components/common/loading-background"
 import { JWT_CONFIG } from "@/constants/base.constant"
+import { notifyError, notifySuccess } from "@/helpers/toast.helper"
 
 interface Props {
   isOpen: boolean
@@ -51,20 +52,22 @@ const Login = (props: Props) => {
 
     try {
       if (result?.errCode === 200) {
-        if (remember) {
-          const emailCipher = encrypt(data.email)
-          const passwordCipher = encrypt(data.password)
-          saveToLocalStorage(
-            JWT_CONFIG.storageUserRemember,
-            JSON.stringify({
-              email: emailCipher,
-              password: passwordCipher
-            })
-          )
-        } else {
-          localStorage.removeItem(JWT_CONFIG.storageUserRemember)
+        if (result?.userInfo?.role === "user") {
+          if (remember) {
+            const emailCipher = encrypt(data.email)
+            const passwordCipher = encrypt(data.password)
+            saveToLocalStorage(
+              JWT_CONFIG.storageUserRemember,
+              JSON.stringify({
+                email: emailCipher,
+                password: passwordCipher
+              })
+            )
+          } else {
+            localStorage.removeItem(JWT_CONFIG.storageUserRemember)
+          }
+          props.setOpenModal(false)
         }
-        props.setOpenModal(false)
       }
     } catch (e: any) {
       console.error(e)

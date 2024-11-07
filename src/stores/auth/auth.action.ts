@@ -3,8 +3,7 @@ import { State } from "./index"
 import { notifyError, notifySuccess } from "@/helpers/toast.helper"
 import { KEY_COOKIE } from "@/constants/key-cookie.constant"
 import { loginService, registerService, logoutService, resetPasswordService } from "@/services/auth"
-import { MESS_LOGIN, MESS_REGISTER } from "@/constants/message-notification"
-import { saveToCookie, saveToLocalStorage, removeFromLocalStorage, removeCookie, getFromLocalStorage } from "@/helpers/base.helper"
+import { saveToCookie, saveToLocalStorage, removeFromLocalStorage } from "@/helpers/base.helper"
 import { IReqLogin, IReqRegister, IReqLogout, IReqResetPassword } from "@/services/auth/auth.interface"
 
 type Actions = BaseAction<State>
@@ -29,14 +28,18 @@ export const loginAsync =
           path: "/"
         })
         if (result?.userInfo) {
-          saveToLocalStorage("userData", result?.userInfo)
-          dispatch(
-            setUser({
-              userData: { ...result?.userInfo },
-              isLogin: true
-            })
-          )
-          notifySuccess("Login successfully")
+          if (result?.userInfo?.role === "user") {
+            saveToLocalStorage("userData", result?.userInfo)
+            dispatch(
+              setUser({
+                userData: { ...result?.userInfo },
+                isLogin: true
+              })
+            )
+            notifySuccess("Login successfully")
+          } else {
+            notifyError("User not exist")
+          }
         }
       } else {
         notifyError(result?.message)

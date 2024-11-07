@@ -19,7 +19,7 @@ const initialState: State = {
     birthday: "",
     gender: "",
     address: "",
-    avatar: ""
+    urlAvatar: ""
   },
   isLogin: false,
   isRegister: false

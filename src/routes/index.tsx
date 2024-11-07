@@ -15,15 +15,15 @@ export const navigation = [
     submenu: [
       {
         title: "Northern Vietnam",
-        url: "/tours?region=Northern+Vietnam"
+        url: "/tours?type=Northern+Vietnam"
       },
       {
         title: "Central Vietnam",
-        url: "/tours?region=Central+Vietnam"
+        url: "/tours?type=Central+Vietnam"
       },
       {
         title: "Southern Vietnam",
-        url: "/tours?region=Southern+Vietnam"
+        url: "/tours?type=Southern+Vietnam"
       }
     ]
   },

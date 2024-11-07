@@ -24,14 +24,14 @@ export const getUserById = (tourId: string) => {
 }
 
 export const updateProfile =
-  (payload: IReqUpdateProfile, handleSuccess: () => void, handleError: () => void) =>
+  (payload: IReqUpdateProfile, handleSuccess: () => void, handleError: (err: any) => void) =>
   async ({ dispatch, getState, setState }: Actions) => {
     try {
       const result = await updateProfileService(payload)
       if (result?.errCode === 200) {
         handleSuccess()
       } else {
-        handleError()
+        handleError(result?.message)
       }
       return result
     } catch (error: any) {

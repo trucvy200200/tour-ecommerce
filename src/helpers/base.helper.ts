@@ -71,7 +71,7 @@ export const isBlob = (input: any) => {
 
 export const formatCurrencyNoUnit = (price: number) => {
   if (price === undefined || price === null) return
-  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 }
 
 export const convertFollowers = (value: number) => {
