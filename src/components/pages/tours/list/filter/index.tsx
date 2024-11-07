@@ -101,7 +101,7 @@ const FilterComponent = (props: Props) => {
             />
             {item.fromValue && item.toValue ? (
               <div className="text-[14px]">
-                VND {item.fromValue} - VND {item.toValue}
+                VND {item.labelFrom} - VND {item.labelTo}
               </div>
             ) : (
               <div className="text-[14px]">VND {item.labelFrom}+ </div>
