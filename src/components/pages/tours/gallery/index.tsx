@@ -102,7 +102,14 @@ const Gallery = (props: Props) => {
         </SwiperChild>
       </div>
       <div className="lightbox">
-        <Lightbox open={open} slides={[{ src: "/tour-1.jpg" }]} close={() => setOpen(false)} plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]} />
+        <Lightbox
+          open={open}
+          slides={props?.images.map((item: any) => {
+            return { src: item?.urlImage }
+          })}
+          close={() => setOpen(false)}
+          plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
+        />
       </div>
     </>
   )
