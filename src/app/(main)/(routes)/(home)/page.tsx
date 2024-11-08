@@ -6,7 +6,7 @@ import TourList from "@/components/pages/home/tour-list"
 
 export default function Home() {
   return (
-    <div>
+    <div className="mb-6">
       <BannerSlider />
       <HotTour />
       <Counting />
