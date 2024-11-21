@@ -8,6 +8,8 @@ export type State = {
   hotTours: Array<TOUR_MODEL>
   latestTours: Array<TOUR_MODEL>
   total: number
+  detailVehicle: any
+  detailHotel: any
 }
 
 const initialState: State = {
@@ -27,8 +29,12 @@ const initialState: State = {
     plan: "",
     priceAdult: 0,
     priceChild: 0,
-    regulation: ""
+    regulation: "",
+    estimatedTime: "",
+    isApprove: false
   },
+  detailVehicle: {},
+  detailHotel: {},
   total: 0
 }
 

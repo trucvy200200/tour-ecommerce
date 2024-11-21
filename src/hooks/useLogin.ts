@@ -6,10 +6,10 @@ export const useLogin = () => {
   const isLogin = getFromLocalStorage("isLogin")
   const userData = getFromLocalStorage("userData")
   const token = getFromCookieWithName(null, KEY_COOKIE.TOKEN)
-  const [value, setValue] = useState(null)
+  const [value, setValue] = useState<boolean>(false)
 
   useEffect(() => {
-    setValue(token && isLogin && userData?.id)
+    setValue(token && isLogin && userData?.id ? true : false)
     if (!token || !isLogin || !userData?.id) {
       window.location.href = "/"
     }

@@ -104,7 +104,7 @@ const Gallery = (props: Props) => {
       <div className="lightbox">
         <Lightbox
           open={open}
-          slides={props?.images.map((item: any) => {
+          slides={props?.images?.map((item: any) => {
             return { src: item?.urlImage }
           })}
           close={() => setOpen(false)}

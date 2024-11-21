@@ -1,4 +1,4 @@
-import { loginAsync, registerAsync, logoutAsync, setUser, changePassword } from "./auth.action"
+import { loginAsync, registerAsync, logoutAsync, setUser, changePassword, setOpenLogin } from "./auth.action"
 import { createHook, createStore } from "react-sweet-state"
 import { selector } from "./auth.selector"
 import { USER_MODEL } from "@/models/user.model"
@@ -7,6 +7,7 @@ export type State = {
   userData: USER_MODEL
   isLogin: boolean
   isRegister: boolean
+  isModalLogin: boolean
 }
 
 const initialState: State = {
@@ -22,7 +23,8 @@ const initialState: State = {
     urlAvatar: ""
   },
   isLogin: false,
-  isRegister: false
+  isRegister: false,
+  isModalLogin: false
 }
 
 const actions = {
@@ -30,7 +32,8 @@ const actions = {
   loginAsync,
   registerAsync,
   setUser,
-  changePassword
+  changePassword,
+  setOpenLogin
 }
 
 const Store = createStore({

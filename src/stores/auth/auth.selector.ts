@@ -3,6 +3,7 @@ export const selector = (state: State) => {
   return {
     isLogin: state.isLogin,
     isRegister: state.isRegister,
-    userData: state.userData
+    userData: state.userData,
+    isModalLogin: state.isModalLogin
   }
 }

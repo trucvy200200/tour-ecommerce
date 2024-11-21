@@ -3,7 +3,7 @@ import Gallery from "@/components/pages/tours/gallery"
 import { CiLocationOn } from "react-icons/ci"
 import { FaPhone } from "react-icons/fa"
 import { MdAccessTime } from "react-icons/md"
-import Calendar from "@/components/pages/tours/calendar"
+import Info from "@/components/pages/tours/info"
 import Ticket from "@/components/pages/tours/tickets"
 import { useParams } from "next/navigation"
 import { useEffect } from "react"
@@ -48,7 +48,7 @@ export default function TourDetail() {
                 Duration: {store?.detail?.duration} {store?.detail?.duration > 1 ? "days" : "day"}
               </span>
             </div>
-            <div dangerouslySetInnerHTML={{ __html: (store?.detail?.description as string) || "" }} className="text-[16px] font-bold"></div>
+            <div dangerouslySetInnerHTML={{ __html: (store?.detail?.description as string) || "" }} className="text-[16px]"></div>
             <div className="flex flex-col gap-[10px]">
               <div className="text-[20px] font-bold">Regulations</div>
               <div dangerouslySetInnerHTML={{ __html: (store?.detail?.regulation as string) || "" }} />
@@ -71,10 +71,9 @@ export default function TourDetail() {
           </div>
           <div className="right-content ml-[30px] max-md:ml-0">
             <div className="mb-[15px] flex flex-col gap-[15px]">
-              <div className="text-[20px] font-bold">Tickets and prices</div>
-              <span className="text-[14px] font-bold">Search tickets availability by date</span>
+              <div className="text-[20px] font-bold">Details and prices</div>
             </div>
-            <Calendar />
+            <Info hotel={store?.detailHotel} transportation={store?.detailVehicle} detail={store?.detail} />
             <Ticket priceAdult={store?.detail?.priceAdult} priceChild={store?.detail?.priceChild} id={store?.detail?.id} />
           </div>
         </div>

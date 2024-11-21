@@ -23,7 +23,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = React.useState(false)
   const isLogin = getFromLocalStorage("isLogin")
   const userData = getFromLocalStorage("userData")
-  const [, actionAuth] = useAuth()
+  const [storeAuth, actionAuth] = useAuth()
 
   React.useEffect(() => {
     userData?.id && actionAuth.setUser({ userData, isLogin: true })
@@ -92,7 +92,7 @@ export default function Header() {
               {isLogin && userData?.id ? (
                 <UserDropdown />
               ) : (
-                <div className="flex gap-2 items-center cursor-pointer hover:text-[black]" onClick={() => setIsOpen(true)}>
+                <div className="flex gap-2 items-center cursor-pointer hover:text-[black]" onClick={() => actionAuth.setOpenLogin(true)}>
                   <CiLogin size={23} />
                   Login
                 </div>
@@ -138,7 +138,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <Login isOpen={isOpen} setOpenModal={setIsOpen} />
+      <Login isOpen={storeAuth.isModalLogin} setOpenModal={actionAuth.setOpenLogin} />
     </div>
   )
 }

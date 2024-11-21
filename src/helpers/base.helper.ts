@@ -71,7 +71,7 @@ export const isBlob = (input: any) => {
 
 export const formatCurrencyNoUnit = (price: number) => {
   if (price === undefined || price === null) return
-  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
 export const convertFollowers = (value: number) => {
@@ -95,5 +95,10 @@ export const isSpecialCustomer = () => {
   const userData = getFromLocalStorage("userData")
   const token = getFromCookieWithName(null, KEY_COOKIE.TOKEN)
 
-  return token && isLogin && userData?.id
+  return token && isLogin && userData?.id ? true : false
+}
+
+export const naiveRound = (num: number, decimalPlaces: number) => {
+  var p = Math.pow(10, decimalPlaces)
+  return Math.round(num * p) / p
 }

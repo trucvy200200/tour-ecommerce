@@ -29,12 +29,16 @@ export const getToursById = (tourId: string) => {
       const res = await getTourByIdService(tourId)
       actions.setState({
         ...actions.getState(),
-        detail: res?.tours
+        detail: res?.tours,
+        detailVehicle: res?.trans,
+        detailHotel: res?.hotel
       })
     } catch (error: any) {
       actions.setState({
         ...actions.getState(),
-        detail: {}
+        detail: {},
+        detailVehicle: {},
+        detailHotel: {}
       })
     }
   }

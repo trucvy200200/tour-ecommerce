@@ -4,6 +4,7 @@ import { CiTimer } from "react-icons/ci"
 import { IoStar, IoChevronForwardSharp } from "react-icons/io5"
 import { TOUR_MODEL } from "@/models/tour.model"
 import { useRouter } from "next/navigation"
+import { formatCurrencyNoUnit } from "@/helpers/base.helper"
 
 interface Props {
   data: TOUR_MODEL
@@ -21,7 +22,7 @@ const Card = (props: Props) => {
       </div>
       <div className="flex gap-1 flex-col">
         <div className="text-[14px]">{props?.data?.location}</div>
-        <div className="capitalize font-bold text-[20px]">{props?.data?.name}</div>
+        <div className="capitalize font-bold text-[20px] line-clamp-1">{props?.data?.name}</div>
         <div
           className="text-[14px] decoration-none line-clamp-2 break-word text-wrap"
           dangerouslySetInnerHTML={{
@@ -36,10 +37,10 @@ const Card = (props: Props) => {
           <IoStar size={16} color="#FFC107" />
           4.4 <span className="font-normal">(244 reviews)</span>
         </div> */}
-        <div className="absolute bottom-[20px] right-[20px] max-md:relative max-md:flex max-md:justify-end max-md:bottom-0 max-md:right-0">
+        <div className="absolute bottom-[10px] right-[20px] max-md:relative max-md:flex max-md:justify-end max-md:bottom-0 max-md:right-0">
           <div className="text-right">
             <div className="text-[12px] mb-1">
-              From <span className="font-bold text-[16px]">{props?.data?.priceAdult}VND</span>
+              From <span className="font-bold text-[16px]">{formatCurrencyNoUnit(props?.data?.priceAdult)} VND</span>
             </div>
             <div
               onClick={() => router.push(`/tours/${props?.data?.id}`)}

@@ -1,4 +1,4 @@
-export interface TOUR_MODEL {
+export interface BOOKING_MODEL {
   id: string
   address: string
   delFlg: string
@@ -12,6 +12,4 @@ export interface TOUR_MODEL {
   priceAdult: number
   priceChild: number
   regulation: string
-  estimatedTime: string
-  isApprove: boolean
 }

@@ -113,3 +113,11 @@ export const changePassword =
       return result
     }
   }
+
+export const setOpenLogin = (value: boolean) => {
+  return async (actions: Actions) => {
+    actions.setState({
+      isModalLogin: value
+    })
+  }
+}

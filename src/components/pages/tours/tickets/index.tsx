@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import { FiMinus } from "react-icons/fi"
 import { FaPlus } from "react-icons/fa6"
 import { RiErrorWarningLine } from "react-icons/ri"
 import { useRouter } from "next/navigation"
 import { formatCurrencyNoUnit } from "@/helpers/base.helper"
 import { notifyError } from "@/helpers/toast.helper"
+import { useBooking } from "@/stores/booking"
+import { isSpecialCustomer } from "@/helpers/base.helper"
+import { useAuth } from "@/stores/auth"
+
 interface Props {
   priceAdult: number
   priceChild: number
@@ -14,12 +18,25 @@ const Ticket = (props: Props) => {
   const router = useRouter()
   const [adultNumber, setAdultNumber] = useState(0)
   const [childNumber, setChildNumber] = useState(0)
+  const [_, action] = useBooking()
+  const [storeAuth, actionAuth] = useAuth()
 
-  const onSubmit = () => {
-    if (adultNumber > 0 || childNumber > 0) {
-      return router.push(`/booking/${props?.id}`)
-    } else notifyError("Please select at least one ticket")
+  const onSubmit = (e: any) => {
+    if (!isSpecialCustomer()) {
+      actionAuth.setOpenLogin(true)
+    } else {
+      if (adultNumber > 0) {
+        action.setBookingData({
+          adultNumber,
+          childNumber,
+          id: props.id,
+          totalPrice: adultNumber * props?.priceAdult + childNumber * props?.priceChild
+        })
+        return router.push(`/booking/${props?.id}`)
+      } else notifyError("Please select at least one adult ticket")
+    }
   }
+
   return (
     <div className="border-[1px] rounded-[8px] py-3 px-2 border-[#166699] flex flex-col gap-[20px]">
       <div className="text-[14px] font-bold">Ticket number</div>
