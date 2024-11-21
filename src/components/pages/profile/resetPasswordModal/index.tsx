@@ -34,12 +34,18 @@ const ModalReset = (props: any) => {
   const [checkDisabled, setCheckDisabled] = React.useState<boolean>(false)
   const [, actionAuth] = useAuth()
   const schemaChangePassword = yup.object().shape({
-    oldPassword: yup.string().required("Please enter old password").matches(passwordPattern, "Password invalid"),
-    newPassword: yup.string().required("Please enter new password").matches(passwordPattern, "Password invalid"),
+    oldPassword: yup
+      .string()
+      .required("Please enter old password")
+      .matches(passwordPattern, "Password must contain at least 8 characters, at least 1 letter, 1 number and 1 special character"),
+    newPassword: yup
+      .string()
+      .required("Please enter new password")
+      .matches(passwordPattern, "Password must contain at least 8 characters, at least 1 letter, 1 number and 1 special character"),
     confirmPassword: yup
       .string()
       .required("Please enter confirm password")
-      .matches(passwordPattern, "Password invalid")
+      .matches(passwordPattern, "Password must contain at least 8 characters, at least 1 letter, 1 number and 1 special character")
       .oneOf([yup.ref("newPassword"), ""], "Confirm password is incorrect")
   })
   const {
