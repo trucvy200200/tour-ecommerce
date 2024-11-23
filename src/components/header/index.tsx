@@ -20,7 +20,6 @@ export default function Header() {
   const [isPageScroll, setIsPageScroll] = React.useState(pathName === "/" || pathName === "/flights" ? false : true)
   const [showSubmenu, setShowSubmenu] = React.useState(-1)
   const [showSubHeader, setShowSubHeader] = React.useState(true)
-  const [isOpen, setIsOpen] = React.useState(false)
   const isLogin = getFromLocalStorage("isLogin")
   const userData = getFromLocalStorage("userData")
   const [storeAuth, actionAuth] = useAuth()

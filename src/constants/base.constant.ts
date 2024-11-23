@@ -21,3 +21,7 @@ export const JWT_CONFIG = {
   storageUserRemember: "storageUserRemember",
   remember: "remember"
 }
+
+export const DEFAULT_PHONE_NUMBER = "0123456789"
+
+export const DEFAULT_EMAIL = "G6CQ2@example.com"

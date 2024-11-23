@@ -11,7 +11,7 @@ export default function Home() {
       <HotTour />
       <Counting />
       <LatestTour />
-      {/* <TourList /> */}
+      <TourList />
     </div>
   )
 }

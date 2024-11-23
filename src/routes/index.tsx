@@ -7,10 +7,6 @@ export const navigation = [
     url: "/"
   },
   {
-    title: "Flights",
-    url: "/flights"
-  },
-  {
     title: "Tour",
     submenu: [
       {
