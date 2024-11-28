@@ -31,8 +31,8 @@ const StepDetail = ({ setStep }: any) => {
   })
 
   const onSubmit = () => {
-    if (adults.filter((item: any) => item.firstName === "" || item.lastName === "").length > 0) return notifyError("Please fill in all required fields")
-    if (storeBooking.detail.childNumber && children.filter((item: any) => item.firstName === "" || item.lastName === "").length > 0)
+    if (adults.slice(0, -1).filter((item: any) => item.firstName === "" || item.lastName === "").length > 0) return notifyError("Please fill in all required fields")
+    if (storeBooking.detail.childNumber && children.slice(0, -1).filter((item: any) => item.firstName === "" || item.lastName === "").length > 0)
       return notifyError("Please fill in all required fields")
     actionBooking.setBookingData({ ...storeBooking.detail, adults, children, fullName: getValues("firstName") + " " + getValues("lastName"), phone: getValues("phone") })
     setStep(2)
@@ -40,17 +40,18 @@ const StepDetail = ({ setStep }: any) => {
 
   const handleChangeAdult = (e: any, name: string, index: number) => {
     const value = e.target.value
-    let arr = adults
-    if (index > arr.length - 1) arr.push({ firstName: "", lastName: "" })
-    else arr[index][name] = value
+    let arr = [...adults]
+    if (index === arr.length - 1) arr.push({ firstName: "", lastName: "" })
+    arr[index][name] = value
     setAdults(arr)
   }
 
   const handleChangeChildren = (e: any, name: string, index: number) => {
     const value = e.target.value
     let arr = children
-    if (index > arr.length - 1) arr.push({ firstName: "", lastName: "" })
-    else arr[index][name] = value
+    if (index === arr.length - 1) arr.push({ firstName: "", lastName: "" })
+    arr[index][name] = value
+
     setChildren(arr)
   }
 

@@ -1,8 +1,10 @@
 import { createHook, createStore } from "react-sweet-state"
-import { setBookingData, createBooking, payment } from "./booking.action"
+import { setBookingData, createBooking, payment, getOrders, getOrderDetail, cancelOrder } from "./booking.action"
 
 export type State = {
   detail: any
+  list: any
+  total: number
 }
 
 const initialState: State = {
@@ -14,13 +16,18 @@ const initialState: State = {
     children: [],
     fullName: "",
     phone: ""
-  }
+  },
+  list: [],
+  total: 0
 }
 
 const actions = {
   setBookingData,
   createBooking,
-  payment
+  payment,
+  getOrders,
+  getOrderDetail,
+  cancelOrder
 }
 
 const Store = createStore({

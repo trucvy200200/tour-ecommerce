@@ -18,10 +18,6 @@ const UserDropdown = () => {
     document.addEventListener("mousedown", handleClickOutsideDropdown)
   }, [catMenu, showMenu])
 
-  useEffect(() => {
-    actionUser.getUserById(userData?.id)
-  }, [])
-
   const handleClickOutsideDropdown = (e: any) => {
     if (showMenu && !catMenu?.current?.contains(e.target as Node)) {
       setShowMenu(false)

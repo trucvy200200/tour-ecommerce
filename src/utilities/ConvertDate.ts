@@ -27,7 +27,7 @@ export const convertDateDefaultV4 = (value: string) => {
 }
 
 export const getDateTimeString = (value: string) => {
-  return moment(value).format("HH:mm DD-MM-YYYY")
+  return moment(value).format("HH:mm DD/MM/YYYY")
 }
 const viLocale = {
   months: "Tháng 1_Tháng 2_Tháng 3_Tháng 4_Tháng 5_Tháng 6_Tháng 7_Tháng 8_Tháng 9_Tháng 10_Tháng 11_Tháng 12".split("_"),
@@ -84,13 +84,13 @@ export const formatTimeAgo: any = (input: any) => {
 
 export const renderTimeCallAPI = (value: any, isEnd?: boolean) => {
   if (!value) return null
-  const timeData = new Date().getTimezoneOffset() / (-60)
-  const newTime = timeData >= 0 ? timeData : (-1 * timeData)
+  const timeData = new Date().getTimezoneOffset() / -60
+  const newTime = timeData >= 0 ? timeData : -1 * timeData
   const now = new Date(0, 0)
   now.setMinutes(+Math.round(newTime * 60))
   const hours = now.getHours()
   const minutes = now.getMinutes()
 
   const time = `${hours >= 10 ? hours : `0${hours}`}:${minutes >= 10 ? minutes : `0${minutes}`}`
-  return `${value}${isEnd ? 'T23:59:59' : 'T00:00:00'}${timeData >= 0 ? "+" : "-"}${time}`
+  return `${value}${isEnd ? "T23:59:59" : "T00:00:00"}${timeData >= 0 ? "+" : "-"}${time}`
 }

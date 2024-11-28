@@ -14,7 +14,7 @@ const data = [
 
 const Filter = () => {
   return (
-    <div className="mt-[160px] container">
+    <div className="mt-[130px] container">
       <div className="font-bold text-[16px] mb-6">
         Filter: <span className="font-[500]">1 flights</span>
       </div>

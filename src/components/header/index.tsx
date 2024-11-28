@@ -10,6 +10,7 @@ import { navigation } from "@/routes"
 import { getFromLocalStorage } from "@/helpers/base.helper"
 import { useAuth } from "@/stores/auth"
 import dynamic from "next/dynamic"
+import { useUser } from "@/stores/users"
 
 const UserDropdown = dynamic(() => import("./user-dropdown"), {
   ssr: false
@@ -23,6 +24,11 @@ export default function Header() {
   const isLogin = getFromLocalStorage("isLogin")
   const userData = getFromLocalStorage("userData")
   const [storeAuth, actionAuth] = useAuth()
+  const [storeUser, actionUser] = useUser()
+
+  React.useEffect(() => {
+    actionUser.getUserById(userData?.id)
+  }, [])
 
   React.useEffect(() => {
     userData?.id && actionAuth.setUser({ userData, isLogin: true })
@@ -71,7 +77,7 @@ export default function Header() {
       <div className={`flex flex-col items-center w-full ${isPageScroll ? "bg-[#166699]" : "bg-[rgba(255,255,255,0.1)]"} fixed z-[99] top-0`}>
         {showSubHeader && (
           <div className="container max-w-full max-md:hidden">
-            <div className="border-b-[1px] border-b-[rgb(255_255_255/18%)] flex justify-between py-3">
+            <div className="border-b-[1px] border-b-[rgb(255_255_255/18%)] flex justify-between">
               <div className="flex gap-4 items-center">
                 <div className="flex gap-2 items-center">
                   <FaPhone color="#fff" size={20} />
@@ -106,7 +112,7 @@ export default function Header() {
               Booking<span className="text-[black]">Now</span>
             </div>
           </a>
-          <div className="flex gap-[35px] self-stretch my-auto text-base tracking-normal leading-6 text-center max-lg:gap-[20px] max-md:hidden">
+          <div className="max-w-[50%] justify-center w-full flex gap-[35px] self-stretch my-auto text-base tracking-normal leading-6 text-center max-lg:gap-[20px] max-md:hidden">
             {navigation.map((item: any, index: number) => {
               return (
                 <div

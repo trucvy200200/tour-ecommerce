@@ -128,7 +128,7 @@ const Tour = () => {
   }
 
   return (
-    <div className="mb-6 container mt-[160px] grid grid-cols-[35%_65%] gap-[20px] max-md:grid-cols-1 max-md:mt-[90px]">
+    <div className="mb-6 container mt-[130px] grid grid-cols-[35%_65%] gap-[20px] max-md:grid-cols-1 max-md:mt-[90px]">
       <div>
         <Fitler keyword={keyword || ""} price={price} type={type} handleFilter={handleFilter} setKeyword={setKeyword} setPrice={setPrice} setType={setType} />
       </div>

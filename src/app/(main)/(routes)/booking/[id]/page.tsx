@@ -24,14 +24,14 @@ const Booking = () => {
   }, [])
 
   return (
-    <div className="container mt-[170px]">
+    <div className="container mt-[130px] mb-[100px]">
       <div className="flex gap-2 items-center cursor-pointer">
         <IoChevronBackSharp size={23} />
         <div className="text-[14px] hover:underline">{step === 1 ? "Ticket options" : "Your details"}</div>
       </div>
       <div className="text-[14px] mt-5">Step {step} of 2</div>
       <div className="grid grid-cols-[65%_35%] mt-2">
-        {step === 1 ? <DetailStep setStep={setStep} /> : <PaymentStep setStep={setStep} />}
+        {step === 1 ? <DetailStep setStep={setStep} /> : <PaymentStep />}
         <div>
           <div className="grid grid-cols-[30%_70%] border-b-[1px] gap-2 border-b-[gray] w-full h-[fit-content] pb-5">
             <div className="w-[100px] h-[100px] rounded-[8px] object-cover overflow-hidden">
@@ -45,12 +45,12 @@ const Booking = () => {
           <div className="mt-4 font-bold text-[20px]">{+store.detail?.adultNumber + +store.detail?.childNumber || 0} x Standard ticket</div>
           <div className="flex justify-between items-center mt-2  ">
             <div>{store.detail?.adultNumber} x Adult (age 7-82)</div>
-            <div>{formatCurrencyNoUnit(storeTour.detail?.priceAdult)} VND</div>
+            <div>{formatCurrencyNoUnit(storeTour.detail?.priceAdult * store.detail?.adultNumber)} VND</div>
           </div>
           {store.detail?.childNumber > 0 && (
             <div className="flex justify-between items-center mt-2">
               <div>{store.detail?.childNumber} x Child (age 5-6)</div>
-              <div>{formatCurrencyNoUnit(storeTour.detail?.priceChild)} VND</div>
+              <div>{formatCurrencyNoUnit(storeTour.detail?.priceChild * store.detail?.childNumber)} VND</div>
             </div>
           )}
           <div className="font-bold flex items-center justify-between mt-3 text-[16px]">
