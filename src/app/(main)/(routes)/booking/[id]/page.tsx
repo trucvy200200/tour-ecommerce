@@ -24,7 +24,7 @@ const Booking = () => {
   }, [])
 
   return (
-    <div className="container mt-[130px] mb-[100px]">
+    <div className="container mt-[150px] mb-[100px]">
       <div className="flex gap-2 items-center cursor-pointer">
         <IoChevronBackSharp size={23} />
         <div className="text-[14px] hover:underline">{step === 1 ? "Ticket options" : "Your details"}</div>

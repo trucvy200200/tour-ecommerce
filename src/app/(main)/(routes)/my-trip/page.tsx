@@ -63,7 +63,7 @@ const MyTrip = () => {
   }
 
   return isSpecial ? (
-    <div className="container mx-auto mt-[130px] max-md:mt-[80px] mb-[50px]">
+    <div className="container mx-auto mt-[150px] max-md:mt-[80px] mb-[50px]">
       <div className="text-[25px] font-bold mb-6">List of orders</div>
       <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">{store?.list?.length > 0 && store?.list?.map((item: any, index: number) => <Card key={index} data={item} />)}</div>
       {store?.list?.length > 0 ? (

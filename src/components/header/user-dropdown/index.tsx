@@ -29,7 +29,7 @@ const UserDropdown = () => {
   }
 
   return (
-    <div onClick={() => setShowMenu(!showMenu)} ref={catMenu} className="z-[10] relative flex gap-2 items-center cursor-pointer hover:bg-[rgba(255,255,255,0.2)] p-2 rounded-[4px]">
+    <div onClick={() => setShowMenu(!showMenu)} ref={catMenu} className="z-[10] relative flex gap-2 items-center cursor-pointer rounded-[4px]">
       <div className="rounded-[999px] w-[30px] h-[30px] relative border border-[#fcba03] border-[1px]">
         <Image fill src={storeUser?.user?.urlAvatar || "/defaultAvatar.png"} alt="avatar" className="rounded-[999px] object-cover" />
       </div>

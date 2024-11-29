@@ -95,7 +95,7 @@ const MyTripDetail = () => {
   }
 
   return isSpecial ? (
-    <div className="container mt-[130px] mb-6">
+    <div className="container mt-[150px] mb-6">
       <div className="font-bold text-[25px] mb-5">Check your information</div>
       <div className="grid grid-cols-[68%_30%] gap-4">
         <div className="shadow-[rgba(0,0,0,0.12)_0px_0px_8px] rounded-[3px] overflow-hidden py-[20px] px-[10px]">
