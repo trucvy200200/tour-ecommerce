@@ -76,7 +76,7 @@ export default function Header() {
     <div className="flex flex-col justify-center font-bold text-white">
       <div className={`flex flex-col items-center w-full ${isPageScroll ? "bg-[#166699]" : "bg-[rgba(255,255,255,0.1)]"} fixed z-[99] top-0`}>
         {showSubHeader && (
-          <div className="container max-w-full max-md:hidden mt-3">
+          <div className="container max-w-full max-md:hidden mt-1">
             <div className="border-b-[1px] border-b-[rgb(255_255_255/18%)] flex justify-between pb-1">
               <div className="flex gap-4 items-center">
                 <div className="flex gap-2 items-center">
