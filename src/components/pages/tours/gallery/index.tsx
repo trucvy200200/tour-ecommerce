@@ -71,7 +71,6 @@ const Gallery = (props: Props) => {
         </SwiperStyled>
         <SwiperChild
           loop={true}
-          onSwiper={setThumbsSwiper}
           watchSlidesProgress={true}
           modules={[Thumbs, Navigation, FreeMode]}
           spaceBetween={10}

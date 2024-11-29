@@ -1,5 +1,4 @@
 import { KEY_COOKIE } from "@/constants/key-cookie.constant"
-import { BASE_CONSTANTS } from "@/constants/base.constant"
 import { destroyCookie, parseCookies, setCookie } from "nookies"
 import { IDestroyCookieOptions, IParseCookieOptions, ISetCookieOptions } from "@/models/cookie.model"
 import moment from "moment"
@@ -48,17 +47,6 @@ export const saveToCookie = (context: any, nameCookie: KEY_COOKIE, value: any, o
     options = {}
   }
   setCookie(context, nameCookie, value, { ...defaultOptions, ...options })
-}
-
-export const replaceUrlImage = (image_url: string) => {
-  if (image_url === undefined || image_url === null) {
-    return ""
-  }
-  let image = image_url
-  if (!image_url.includes("http") && !image_url.includes(BASE_CONSTANTS.IMAGE_URL)) {
-    image = `https://${BASE_CONSTANTS.IMAGE_URL}/${image_url}`
-  }
-  return image
 }
 
 export const isFile = (input: any) => {
