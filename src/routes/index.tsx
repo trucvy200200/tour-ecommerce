@@ -1,13 +1,17 @@
-import { FaRegUser } from "react-icons/fa"
+import { FaRegUser, FaHome } from "react-icons/fa"
 import { TiShoppingBag } from "react-icons/ti"
+import { CgShoppingBag } from "react-icons/cg"
+import { RiContactsBookFill } from "react-icons/ri"
 
 export const navigation = [
   {
     title: "Home",
-    url: "/"
+    url: "/",
+    icon: <FaHome size={20} />
   },
   {
-    title: "Tour",
+    title: "Tours",
+    icon: <CgShoppingBag size={20} />,
     submenu: [
       {
         title: "Northern Vietnam",
@@ -25,7 +29,8 @@ export const navigation = [
   },
   {
     title: "Contact",
-    url: "/contact"
+    url: "/contact",
+    icon: <RiContactsBookFill size={20} />
   }
 ]
 

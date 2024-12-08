@@ -83,6 +83,7 @@
 }
 
 .card-zoom {
+  min-height: 200px;
   img {
     transition: all 4s ease;
   }

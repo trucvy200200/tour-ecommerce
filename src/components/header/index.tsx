@@ -11,6 +11,8 @@ import { getFromLocalStorage } from "@/helpers/base.helper"
 import { useAuth } from "@/stores/auth"
 import dynamic from "next/dynamic"
 import { useUser } from "@/stores/users"
+import { CgDetailsMore } from "react-icons/cg"
+import MobileMenu from "./mobile"
 
 const UserDropdown = dynamic(() => import("./user-dropdown"), {
   ssr: false
@@ -25,6 +27,7 @@ export default function Header() {
   const userData = getFromLocalStorage("userData")
   const [storeAuth, actionAuth] = useAuth()
   const [storeUser, actionUser] = useUser()
+  const [openMenu, setOpenMenu] = React.useState(false)
 
   React.useEffect(() => {
     if (isLogin && userData?.id) actionUser.getUserById(userData?.id)
@@ -105,8 +108,9 @@ export default function Header() {
             </div>
           </div>
         )}
-        <div className="container flex gap-[10rem] h-[70px] items-center max-w-full max-md:flex-wrap max-md:justify-center">
-          <a href="/" className="text-[30px] flex items-center gap-2">
+        <div className="container flex gap-[10rem] h-[70px] items-center max-w-full max-md:flex-wrap max-md:justify-start">
+          {/* Desktop */}
+          <a href="/" className="text-[30px] flex items-center gap-2 max-md:hidden">
             <MdTour size={32} />
             <div className="text-[white] font-bold">
               Booking<span className="text-[black]">Now</span>
@@ -141,6 +145,29 @@ export default function Header() {
               )
             })}
           </div>
+          {/* Mobile */}
+          <div className="justify-between max-md:flex hidden w-full">
+            <CgDetailsMore size={30} color="white" className="cursor-pointer" onClick={() => setOpenMenu(true)} />
+
+            <div className="hidden max-md:block">
+              {isLogin && userData?.id ? (
+                <UserDropdown />
+              ) : (
+                <div className="flex gap-2 items-center cursor-pointer hover:text-[black]" onClick={() => actionAuth.setOpenLogin(true)}>
+                  <CiLogin size={23} />
+                  Login
+                </div>
+              )}
+            </div>
+          </div>
+          {openMenu ? (
+            <>
+              <div className="fixed inset-0 -z-1 bg-[#000] bg-opacity-50" onClick={() => setOpenMenu(false)}></div>
+              <div className={`absolute z-[10] h-screen top-0 ltr:right-0 left-0 bg-palette-card p-3 min-w-[300px] shadow bg-white`}>
+                <MobileMenu />
+              </div>
+            </>
+          ) : null}
         </div>
       </div>
       <Login isOpen={storeAuth.isModalLogin} setOpenModal={actionAuth.setOpenLogin} />
