@@ -224,7 +224,7 @@ const Profile = () => {
   return isSpecial ? (
     <>
       {loading && <Loading />}
-      <div className="container px-2.5 py-[24px] rounded-[8px] min-h-[300px] mt-[140px] flex-1">
+      <div className="container px-2.5 py-[24px] rounded-[8px] min-h-[300px] mt-[140px] flex-1 max-md:mt-[60px]">
         <form onSubmit={handleSubmit(handleSaveChanges)} className="flex flex-col h-full justify-between">
           <div className="group mb-5 rounded-[100rem] shrink-0 w-full flex justify-center items-center ">
             <div className="relative w-[150px] h-[150px]">

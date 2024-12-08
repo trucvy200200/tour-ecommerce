@@ -7,17 +7,18 @@ const ReturnPolicy = () => {
   }
 
   return (
-    <div className="container w-full h-auto flex-col justify-start items-start gap-5 inline-flex pt-[20px] mt-[140px] mb-[20px]">
+    <div className="container w-full h-auto flex-col justify-start items-start gap-5 inline-flex pt-[20px] max-md:mt-[60px] mt-[140px] mb-[20px]">
       <div className="Frame5276 w-full h-auto relative">
-        <div className="text-[40px] font-bold mb-[20px] leading-[54px]">{content.title["en"]}</div>
+        <div className="text-[30px] font-bold mb-[10px] leading-[54px] max-md:text-[25px]">{content.title["en"]}</div>
 
-        <div className="flex flex-col text-xl leading-8 text-black">
+        <div className="flex flex-col text-xl leading-8 text-black max-md:text-[16px]">
           <div className="w-full font-bold leading-[160%] text-slate-950 max-md:max-w-full">I. INTRODUCTION</div>
           <div className="mt-2.5 w-full max-md:max-w-full">
             Welcome to BookingNow. Before registering for an account or using BookingNow{`'`}s services, please carefully read the following Terms of Use and the Operation Regulations
             of BookingNow e-commerce platform here to understand your legal rights and obligations towards BookingNow and its affiliates and subsidiaries (hereinafter collectively
             referred to as {`"`} we{`"`}).
-            <br /> <br />
+            <br />
+            <br />
             The {`"`}Service{`"`} we provide includes content posted on the BookingNow website and tools, features, information, links, linked applications and any new features or
             content added or further developed are covered by these Terms of Service. BookingNow e-commerce platform service is an online e-commerce center serving the needs of
             introduction, sales and online shopping between Buyers and Sellers collectively referred to as Customers. Sellers and Buyers enter into contracts on BookingNow E-commerce
@@ -27,7 +28,7 @@ const ReturnPolicy = () => {
             purchase of goods between Buyers and Sellers and manages transportation between related parties.
           </div>
           <div className="mt-2.5 w-full font-bold leading-[160%] text-slate-950 max-md:max-w-full">II. TERMS OF USE</div>
-          <div className="mt-2.5 w-full max-md:max-w-full">
+          <div className="mt-1.5 w-full max-md:max-w-full">
             The right to use BookingNow and the Services is effective until terminated. The right to use will be terminated in accordance with these Terms of Service or in case the
             Customer violates any of the terms or conditions specified in these Terms of Service. In such event, BookingNow may terminate Customer{`'`}s use with or without notice.
           </div>
@@ -70,8 +71,8 @@ const ReturnPolicy = () => {
             provides to BookingNow where required by law or by order of a court or governmental authority or competent government authority to request BookingNow, or Other causes as
             prescribed by law
           </div>
-          <div className="my-5 w-full font-bold leading-[160%] text-slate-950 max-md:max-w-full">III. GENERAL</div>
-          <div className="text-xl leading-8">
+          <div className="mt-5 mb-2 w-full font-bold leading-[160%] text-slate-950 max-md:max-w-full max-md:text-[16px]">III. GENERAL</div>
+          <div className="text-xl leading-8 max-md:text-[16px]">
             BookingNow reserves the right to modify these Terms of Service at any time by posting the revised Terms of Service to BookingNow. Customer{`'`}s continued use of BookingNow
             after the change is posted will constitute Customer{`'`}s acceptance of the revised Terms of Service.
             <br />

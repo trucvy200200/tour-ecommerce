@@ -31,7 +31,7 @@ export default function TourDetail() {
         <div>
           <Gallery images={store?.detail?.images} />
         </div>
-        <div className="grid grid-cols-[60%_40%] max-md:flex-col-reverse max-md:flex">
+        <div className="grid grid-cols-[60%_40%] max-md:flex-col-reverse max-md:flex gap-2">
           <div className="left-content flex flex-col gap-[20px]">
             <div className="flex gap-2">
               <div className="flex items-center gap-2">

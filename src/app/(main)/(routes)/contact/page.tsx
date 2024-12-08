@@ -25,7 +25,7 @@ const data = [
 ]
 const ContactUs = () => {
   return (
-    <div className="container mt-[140px] mb-[100px]">
+    <div className="container mt-[140px] mb-[100px] max-md:mt-[80px]">
       <div className="font-bold text-[30px] max-md:text-[20px]">Customer service</div>
       <div className="grid grid-cols-3 mt-5 gap-[20px] max-md:grid-cols-2 max-sm:grid-cols-1">
         {data.map((item, index) => (

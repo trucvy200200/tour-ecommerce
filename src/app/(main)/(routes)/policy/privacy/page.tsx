@@ -8,12 +8,12 @@ const ReturnPolicy = () => {
   }
 
   return (
-    <div className="container w-full h-auto flex-col justify-start items-start gap-5 inline-flex pt-[20px] mt-[140px] mb-[20px]">
+    <div className="container w-full h-auto flex-col justify-start items-start gap-5 inline-flex pt-[20px] max-md:mt-[60px] mt-[140px] mb-[20px]">
       <div className="Frame5276 w-full h-auto relative">
-        <div className="text-[40px] font-bold mb-[20px] leading-[54px]">{content.title["en"]}</div>
+        <div className="text-[30px] font-bold mb-[20px] leading-[40px] max-md:text-[25px]">{content.title["en"]}</div>
 
         <>
-          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col gap-4">
+          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col gap-4 max-md:text-[16px]">
             <div className="font-bold">1. Purpose of personal information collection</div>
             <div>
               &emsp;The collection on BookingNow E-commerce Platform mainly includes: full name, email, phone number, address of customer. This is the information that we require
@@ -25,7 +25,7 @@ const ReturnPolicy = () => {
               registration names and passwords for appropriate action.
             </div>
           </div>
-          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col gap-4">
+          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col max-md:text-[16px]">
             <div className="font-bold">2. Scope of collection</div>
             <div>&emsp;We use the information members provide to:</div>
             <ul className="list-disc pl-[40px]">
@@ -37,7 +37,7 @@ const ReturnPolicy = () => {
               <li>When requested by judicial authorities including: Procuracy, court, police investigation agency related to any illegal behavior of the customer.</li>
             </ul>
           </div>
-          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col gap-4">
+          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col max-md:text-[16px]">
             <div className="font-bold">3. Information retention period</div>
             <div>
               &emsp;
@@ -47,7 +47,7 @@ const ReturnPolicy = () => {
             </div>
           </div>
 
-          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col gap-4">
+          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col max-md:text-[16px]">
             <div className="font-bold">4. The people or organizations that may have access to that information</div>
             <ul className="list-disc pl-[40px]">
               <li>The information collected from members will be accessed by the administration.</li>
@@ -55,7 +55,7 @@ const ReturnPolicy = () => {
             </ul>
           </div>
 
-          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col gap-4">
+          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col max-md:text-[16px]">
             <div className="font-bold">
               5. Address of the information collection and management unit, including contact methods so that consumers can inquire about the collection and processing of information
               related to them.
@@ -67,7 +67,7 @@ const ReturnPolicy = () => {
             </ul>
           </div>
 
-          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col gap-4">
+          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col max-md:text-[16px]">
             <div className="font-bold">6. Methods and devices for consumers to approach and update their personal data on e-commerce system of information collection unit</div>
             <ul className="list-disc pl-[40px]">
               <li>
@@ -82,7 +82,7 @@ const ReturnPolicy = () => {
             </ul>
           </div>
 
-          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col gap-4">
+          <div className="text-xl leading-8 text-black mt-[10px] flex flex-col max-md:text-[16px]">
             <div className="font-bold">
               7. Mechanism for receiving and resolving consumer complaints related to personal information being used for purposes other than those notified
             </div>

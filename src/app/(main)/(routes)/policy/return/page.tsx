@@ -100,23 +100,23 @@ const ReturnPolicy = () => {
   }
 
   return (
-    <div className="container w-full h-auto flex-col justify-start items-start gap-5 inline-flex pt-[20px] mt-[140px] mb-[20px]">
+    <div className="container w-full h-auto flex-col justify-start items-start gap-5 inline-flex pt-[20px] max-md:mt-[60px] mt-[140px] mb-[20px]">
       <div className="Frame5276 w-full h-auto relative">
-        <div className="text-[40px] font-bold mb-[20px] leading-[54px]">{content.title["en"]}</div>
-        <div className="text-xl leading-8 text-black mb-2">
+        <div className="text-[30px] font-bold mb-[20px] max-md:mb-[10px] leading-[32px] max-md:text-[25px]">{content.title["en"]}</div>
+        <div className="text-xl leading-8 text-black mb-2 max-md:text-[16px]">
           - Tour cancellation time is calculated for working days, excluding Saturdays, Sundays and holidays.
           <br />- Holiday tours are tours whose time falls on one of the prescribed holidays.
         </div>
-        <span className="font-bold text-[24px]">
+        <span className="font-bold text-[24px] max-md:text-[20px]">
           1. In case of cancellation due to <span className="font-bold text-blue-900">BookingNow</span>
         </span>
-        <div className="text-xl leading-8 text-black mb-2">
+        <div className="text-xl leading-8 text-black mb-2 max-md:text-[16px]">
           If BookingNow cannot make the trip, BookingNow must immediately notify the customer and refund the customer the entire amount paid within 3 days from the date of notification
           of trip cancellation. Schedule in cash or bank transfer.
         </div>
-        <div className="font-bold text-[24px]">2. In case of cancellation by the customer</div>
-        <em className="text-xl leading-8 text-black">Tour cancellation conditions:</em>
-        <div className="text-xl leading-8 text-black">
+        <div className="font-bold text-[24px] max-md:text-[20px]">2. In case of cancellation by the customer</div>
+        <em className="text-xl leading-8 text-black max-md:text-[16px]">Tour cancellation conditions:</em>
+        <div className="text-xl leading-8 text-black max-md:text-[16px]">
           – Tour cancellation from 30 – 45 days before departure date: Tour cancellation fee is 10% of total tour price.
           <br />
           – Tour cancellation from 16 – 29 days before departure date: Tour cancellation fee is 30% of total tour price.
@@ -130,13 +130,13 @@ const ReturnPolicy = () => {
           * Tour cancellation time is calculated for working days, excluding Saturdays, Sundays and holidays.
           <br />
         </div>
-        <div className="font-bold text-[24px] mt-2">3. Force majeure cases</div>
-        <div className="text-xl leading-8 text-black">
+        <div className="font-bold text-[24px] mt-2 max-md:text-[20px]">3. Force majeure cases</div>
+        <div className="text-xl leading-8 text-black max-md:text-[16px]">
           If the tour program is canceled or changed by either party due to a force majeure reason (fire, weather, accident, natural disaster, war, delay and cancellation of public
           transport means plus...), then both parties will not bear any obligation to compensate for losses that have occurred and will not bear any legal responsibility. However, each
           party is responsible for trying its best to help the injured party to minimize losses caused by force majeure.
         </div>
-        <div className="text-xl leading-8 text-black font-bold mt-3">
+        <div className="text-xl leading-8 text-black font-bold mt-3 max-md:text-[16px]">
           Note: Trip cancellation must be notified directly to the Company or via fax or email and must be confirmed by the Company. Cancellations by phone are not accepted.
         </div>
       </div>

@@ -30,9 +30,9 @@ const Booking = () => {
         <div className="text-[14px] hover:underline">{step === 1 ? "Ticket options" : "Your details"}</div>
       </div>
       <div className="text-[14px] mt-5">Step {step} of 2</div>
-      <div className="grid grid-cols-[65%_35%] mt-2">
+      <div className="grid grid-cols-[65%_35%] mt-2 max-md:flex max-md:flex-col-reverse max-md:gap-4">
         {step === 1 ? <DetailStep setStep={setStep} /> : <PaymentStep />}
-        <div>
+        <div className="max-md:bg-[#F5F5F5] max-md:p-2">
           <div className="grid grid-cols-[30%_70%] border-b-[1px] gap-2 border-b-[gray] w-full h-[fit-content] pb-5">
             <div className="w-[100px] h-[100px] rounded-[8px] object-cover overflow-hidden">
               <img src={storeTour.detail?.images[0]?.urlImage} alt="img" className="object-cover h-[100px]" />
