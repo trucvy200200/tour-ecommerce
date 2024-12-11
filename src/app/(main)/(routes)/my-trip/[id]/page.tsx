@@ -173,23 +173,28 @@ const MyTripDetail = () => {
         <div>
           <div className="text-[20px] font-bold mb-3">Is all the information accurate?</div>
           <div className="text-[14px]">You can always view and change your tour settings online - no need to re-register</div>
-          <div className="flex items-center gap-2 mt-3">
-            <FaCircleXmark size={16} />
-            <div className="cursor-pointer text-[#006ce4] underline" onClick={() => setConfirmCancel(true)}>
-              Cancel this tour
+          {store?.detail?.orderStatus !== ORDER_STATUS.CANCELLED && store?.detail?.orderStatus !== ORDER_STATUS.CANCELLED_BY_ADMIN && (
+            <div className="flex items-center gap-2 mt-3">
+              <FaCircleXmark size={16} />
+              <div className="cursor-pointer text-[#006ce4] underline" onClick={() => setConfirmCancel(true)}>
+                Cancel this tour
+              </div>
             </div>
-          </div>
+          )}
+
           <Link href={"/policy/return"}>
             <div className="text-[14px] mt-4">
               See more about <span className="text-[#006ce4] underline cursor-pointer">Cancellation Policy</span>
             </div>
           </Link>
-          {store?.detail?.paymentStatus === PAYMENT_STATUS.DEPOSIT_ADVANCE && (
-            <>
-              <div className="my-3 text-red-600 font-bold">Pay the remaining amount: {formatCurrencyNoUnit(store?.detail?.totalAmount - store?.detail?.depositAmount)} VND</div>
-              <Paypal amount={naiveRound(store.detail?.totalAmount - store?.detail?.depositAmount, 0)} />
-            </>
-          )}
+          {store?.detail?.paymentStatus === PAYMENT_STATUS.DEPOSIT_ADVANCE &&
+            store?.detail?.orderStatus !== ORDER_STATUS.CANCELLED &&
+            store?.detail?.orderStatus !== ORDER_STATUS.CANCELLED_BY_ADMIN && (
+              <>
+                <div className="my-3 text-red-600 font-bold">Pay the remaining amount: {formatCurrencyNoUnit(store?.detail?.totalAmount - store?.detail?.depositAmount)} VND</div>
+                <Paypal amount={naiveRound(store.detail?.totalAmount - store?.detail?.depositAmount, 0)} />
+              </>
+            )}
         </div>
       </div>
       {

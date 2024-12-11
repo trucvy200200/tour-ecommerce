@@ -29,7 +29,7 @@ const StepDetail = ({ setStep }: any) => {
       phone: ""
     }
   })
-  console.log(adults)
+
   const onSubmit = () => {
     if (adults.slice(0, -1).filter((item: any) => item.firstName === "" || item.lastName === "").length > 0) return notifyError("Please fill in all required fields")
     if (storeBooking.detail.childNumber && children.slice(0, -1).filter((item: any) => item.firstName === "" || item.lastName === "").length > 0)
