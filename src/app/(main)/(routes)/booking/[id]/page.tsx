@@ -24,8 +24,13 @@ const Booking = () => {
   }, [])
 
   return (
-    <div className="container mt-[150px] mb-[100px]">
-      <div className="flex gap-2 items-center cursor-pointer">
+    <div className="container mt-[150px] mb-[100px] max-md:mt-[80px]">
+      <div
+        className="flex gap-2 items-center cursor-pointer"
+        onClick={() => {
+          step === 2 ? setStep(1) : router.back()
+        }}
+      >
         <IoChevronBackSharp size={23} />
         <div className="text-[14px] hover:underline">{step === 1 ? "Ticket options" : "Your details"}</div>
       </div>

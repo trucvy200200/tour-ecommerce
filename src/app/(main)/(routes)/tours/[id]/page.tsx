@@ -22,8 +22,8 @@ export default function TourDetail() {
 
   return (
     <>
-      <div className="container mt-[170px] flex flex-col gap-[20px] mb-[5rem]">
-        <div className="text-[33px] font-bold leading-[33px] uppercase">{store?.detail?.name}</div>
+      <div className="container mt-[170px] max-md:mt-[80px] flex flex-col gap-[20px] mb-[5rem]">
+        <div className="text-[33px] font-bold leading-[33px] uppercase max-md:text-[20px]">{store?.detail?.name}</div>
         <div className="flex items-center gap-2">
           <CiLocationOn size={23} />
           <span>{store?.detail?.location}</span>

@@ -50,8 +50,8 @@ const ButtonWrapper = ({ currency, showSpinner, amount }) => {
                 {
                   bookingId: id,
                   payment_method: "e-wallet",
-                  depositAmount: store.detail.totalPrice,
-                  totalAmount: store.detail.totalPrice,
+                  depositAmount: store.detail.totalAmount,
+                  totalAmount: store.detail.totalAmount,
                   paymentAccount: response?.payer?.email_address,
                   status: "COMPLETED",
                   payerName: response?.payer?.name?.given_name + " " + response?.payer?.name?.surname

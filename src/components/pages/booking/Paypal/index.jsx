@@ -60,8 +60,8 @@ const ButtonWrapper = ({ currency, showSpinner, amount, handleSetActiveStep, adu
                     fullName: store.detail.fullName,
                     email: store.detail.email,
                     phone: store.detail.phone,
-                    adults: store.detail.adults,
-                    children: store.detail.childNumber > 0 ? store.detail.children : []
+                    adults: store.detail.adults.slice(0, -1),
+                    children: store.detail.childNumber > 0 ? store.detail.children?.slice(0, -1) : []
                   }
                 },
                 (data) => {

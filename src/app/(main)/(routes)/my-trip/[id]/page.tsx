@@ -95,7 +95,7 @@ const MyTripDetail = () => {
   }
 
   return isSpecial ? (
-    <div className="container mt-[150px] mb-6">
+    <div className="container mt-[150px] mb-6 max-md:mt-[80px]">
       <div className="font-bold text-[25px] mb-5">Check your information</div>
       <div className="grid grid-cols-[68%_30%] gap-4 max-md:grid-cols-1">
         <div className="shadow-[rgba(0,0,0,0.12)_0px_0px_8px] rounded-[3px] overflow-hidden py-[20px] px-[10px]">
@@ -136,7 +136,7 @@ const MyTripDetail = () => {
           )}
           <div className="flex justify-between mt-3">
             <div className="text-[#006ce4] font-bold text-[20px]">Total Price</div>
-            <div className="text-[#006ce4] font-bold text-[20px]">{store?.detail?.totalAmount} VND</div>
+            <div className="text-[#006ce4] font-bold text-[20px]">{formatCurrencyNoUnit(store?.detail?.totalAmount)} VND</div>
           </div>
           {store?.detail?.paymentStatus === PAYMENT_STATUS.DEPOSIT_ADVANCE && (
             <div className="flex justify-between mt-3 border-b-[2px] mb-2 pb-[20px]">
@@ -187,7 +187,7 @@ const MyTripDetail = () => {
           {store?.detail?.paymentStatus === PAYMENT_STATUS.DEPOSIT_ADVANCE && (
             <>
               <div className="my-3 text-red-600 font-bold">Pay the remaining amount: {formatCurrencyNoUnit(store?.detail?.totalAmount - store?.detail?.depositAmount)} VND</div>
-              <Paypal amount={naiveRound(store.detail?.totalPrice - store?.detail?.depositAmount, 0)} />
+              <Paypal amount={naiveRound(store.detail?.totalAmount - store?.detail?.depositAmount, 0)} />
             </>
           )}
         </div>

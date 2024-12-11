@@ -2,7 +2,7 @@
 import * as React from "react"
 import { MdTour } from "react-icons/md"
 import { IoChevronDown } from "react-icons/io5"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { CiSearch, CiLogin } from "react-icons/ci"
 import { FaPhone } from "react-icons/fa"
 import Login from "@/components/pages/auth/login"
@@ -28,6 +28,8 @@ export default function Header() {
   const [storeAuth, actionAuth] = useAuth()
   const [storeUser, actionUser] = useUser()
   const [openMenu, setOpenMenu] = React.useState(false)
+  const [searchTerm, setSearchTerm] = React.useState("")
+  const router = useRouter()
 
   React.useEffect(() => {
     if (isLogin && userData?.id) actionUser.getUserById(userData?.id)
@@ -75,6 +77,12 @@ export default function Header() {
     return "hidden"
   }
 
+  const handleKeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      router.push(`/tours?keyword=${searchTerm}`)
+    }
+  }
+
   return (
     <div className="flex flex-col justify-center font-bold text-white">
       <div className={`flex flex-col items-center w-full ${isPageScroll ? "bg-[#166699]" : "bg-[rgba(255,255,255,0.1)]"} fixed z-[99] top-0`}>
@@ -90,6 +98,8 @@ export default function Header() {
                 </div>
                 <div className="relative">
                   <input
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyUp={handleKeyPress}
                     className="font-normal border-none outline-none rounded-[999px] text-[#333] 
                                 text-[12px] w-[200px] h-[25px] px-[15px] bg-[rgba(255,255,255,0.7)]"
                     placeholder="Search..."
