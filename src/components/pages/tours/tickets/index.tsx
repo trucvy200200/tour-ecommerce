@@ -48,7 +48,7 @@ const Ticket = (props: Props) => {
       {loading && <Loading />}
       <div className="flex justify-between flex-wrao">
         <div className="text-[14px] font-bold">Ticket number</div>
-        <em className="text-[14px]">Remaining tickets: {props.tourData.limit - props.tourData.buySlot}</em>
+        <em className="text-[14px]">Remaining tickets: {props.tourData?.limit - props.tourData?.buySlot}</em>
       </div>
       <div className="flex items-center justify-between">
         <div>
@@ -88,13 +88,13 @@ const Ticket = (props: Props) => {
       </div>
       <div
         className={`py-2 w-full rounded-[8px] bg-[#166699] text-white text-center ${
-          +props.tourData.buySlot >= props.tourData.limit ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+          +props.tourData?.buySlot >= props.tourData?.limit ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
         }`}
-        onClick={(e) => props.tourData.buySlot < props.tourData.limit && onSubmit(e)}
+        onClick={(e) => props.tourData?.buySlot < props.tourData?.limit && onSubmit(e)}
       >
         Confirm
       </div>
-      {+props.tourData.buySlot >= props.tourData.limit && <div className="text-center text-red-600 font-bold">Sold out</div>}
+      {+props.tourData?.buySlot >= props.tourData?.limit && <div className="text-center text-red-600 font-bold">Sold out</div>}
       {/* <div className="flex gap-2 items-center">
         <RiErrorWarningLine size={23} />
         Non-refundable
