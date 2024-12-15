@@ -31,7 +31,9 @@ const initialState: State = {
     priceChild: 0,
     regulation: "",
     estimatedTime: "",
-    isApprove: false
+    isApprove: false,
+    limit: 0,
+    buySlot: 0
   },
   detailVehicle: {},
   detailHotel: {},
