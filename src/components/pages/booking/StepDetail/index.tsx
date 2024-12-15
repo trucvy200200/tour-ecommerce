@@ -3,11 +3,11 @@ import { IoChevronForwardSharp } from "react-icons/io5"
 import { RiErrorWarningLine } from "react-icons/ri"
 import { useForm } from "react-hook-form"
 import ErrorText from "@/components/common/error-text"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useBooking } from "@/stores/booking"
 import { notifyError } from "@/helpers/toast.helper"
 
-const StepDetail = ({ setStep }: any) => {
+const StepDetail = ({ setStep, step }: any) => {
   const [store] = useUser()
   const [adults, setAdults] = useState<any>([{ firstName: "", lastName: "" }])
   const [children, setChildren] = useState<any>([{ firstName: "", lastName: "" }])
@@ -30,6 +30,16 @@ const StepDetail = ({ setStep }: any) => {
     }
   })
 
+  useEffect(() => {
+    if (step === 1 && storeBooking.detail.fullName) {
+      setAdults(storeBooking.detail.adults)
+      setChildren(storeBooking.detail.children)
+      setValue("firstName", storeBooking.detail.fullName?.split(" ")[0])
+      setValue("lastName", storeBooking.detail.fullName?.split(" ")[1])
+      setValue("phone", storeBooking.detail.phone)
+    }
+  }, [step])
+
   const onSubmit = () => {
     if (adults.slice(0, -1).filter((item: any) => item.firstName === "" || item.lastName === "").length > 0) return notifyError("Please fill in all required fields")
     if (storeBooking.detail.childNumber && children.slice(0, -1).filter((item: any) => item.firstName === "" || item.lastName === "").length > 0)
@@ -49,13 +59,13 @@ const StepDetail = ({ setStep }: any) => {
   const handleChangeChildren = (e: any, name: string, index: number) => {
     const value = e.target.value
     let arr = children
-    if (index === arr.length - 1) arr.push({ firstName: "", lastName: "" })
+    if (index === arr?.length - 1) arr.push({ firstName: "", lastName: "" })
     arr[index][name] = value
 
     setChildren(arr)
   }
 
-  const renderInput = (handleChange: any, name: string, length: number) => {
+  const renderInput = (handleChange: any, name: string, length: number, adults?: any, children?: any) => {
     let result = []
     for (let i = 0; i < length; i++) {
       result.push(
@@ -72,6 +82,7 @@ const StepDetail = ({ setStep }: any) => {
                 onChange={(e: any) => {
                   handleChange(e, "firstName", i)
                 }}
+                defaultValue={adults?.length > 0 ? adults?.[i]?.firstName : children?.length > 0 ? children?.[i]?.firstName : ""}
                 className="mb-2 w-full border-[1px] border-[#000] px-3 py-1 outline-none rounded-[4px] text-[14px] h-[36px]
                         focus:border-[#0057b8] focus:border-[2px]"
               />
@@ -84,6 +95,7 @@ const StepDetail = ({ setStep }: any) => {
                 onChange={(e: any) => {
                   handleChange(e, "lastName", i)
                 }}
+                defaultValue={adults?.length > 0 ? adults?.[i]?.lastName : children?.length > 0 ? children?.[i]?.lastName : ""}
                 className="w-full border-[1px] border-[#1a1a1a] px-3 py-1 outline-none rounded-[4px] text-[14px] h-[36px]
                         focus:border-[#0057b8] focus:border-[2px]"
               />
@@ -107,6 +119,7 @@ const StepDetail = ({ setStep }: any) => {
               <input
                 {...(register("firstName"), { required: true })}
                 name="firstName"
+                defaultValue={getValues("firstName")}
                 onChange={(e: any) => {
                   const value = e.target.value
                   clearErrors("firstName")
@@ -124,6 +137,7 @@ const StepDetail = ({ setStep }: any) => {
               <input
                 {...(register("lastName"), { required: true })}
                 name="lastName"
+                defaultValue={getValues("lastName")}
                 onChange={(e: any) => {
                   const value = e.target.value
                   clearErrors("lastName")
@@ -156,6 +170,7 @@ const StepDetail = ({ setStep }: any) => {
             <input
               {...(register("phone"), { required: true })}
               name="phone"
+              defaultValue={getValues("phone")}
               onChange={(e: any) => {
                 const value = e.target.value
                 clearErrors("phone")
@@ -170,12 +185,11 @@ const StepDetail = ({ setStep }: any) => {
             <div className="text-[20px] font-bold">Additional details</div>
             <RiErrorWarningLine size={23} />
           </div>
-          {renderInput(handleChangeAdult, "Adult", storeBooking.detail?.adultNumber)}
-          {storeBooking.detail?.childNumber > 0 && renderInput(handleChangeChildren, "Child", storeBooking.detail?.childNumber)}
+          {renderInput(handleChangeAdult, "Adult", storeBooking.detail?.adultNumber, adults)}
+          {storeBooking.detail?.childNumber > 0 && renderInput(handleChangeChildren, "Child", storeBooking.detail?.childNumber, children)}
 
           <button
             className="flex justify-center items-center text-[14px] gap-4 mt-4 mb-[30px] py-2 w-full font-bold rounded-[4px] bg-[#166699] text-white text-center cursor-pointer"
-            // onClick={() => setStep(2)}
             type="submit"
           >
             Payment details

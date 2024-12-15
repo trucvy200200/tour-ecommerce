@@ -14,4 +14,6 @@ export interface TOUR_MODEL {
   regulation: string
   estimatedTime: string
   isApprove: boolean
+  buySlot: number
+  limit: number
 }

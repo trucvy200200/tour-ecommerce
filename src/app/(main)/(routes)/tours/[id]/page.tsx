@@ -74,7 +74,7 @@ export default function TourDetail() {
               <div className="text-[20px] font-bold">Details and prices</div>
             </div>
             <Info hotel={store?.detailHotel} transportation={store?.detailVehicle} detail={store?.detail} />
-            <Ticket priceAdult={store?.detail?.priceAdult} priceChild={store?.detail?.priceChild} id={store?.detail?.id} />
+            <Ticket tourData={store?.detail} priceAdult={store?.detail?.priceAdult} priceChild={store?.detail?.priceChild} id={store?.detail?.id} />
           </div>
         </div>
       </div>

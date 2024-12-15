@@ -8,11 +8,14 @@ import { notifyError } from "@/helpers/toast.helper"
 import { useBooking } from "@/stores/booking"
 import { isSpecialCustomer } from "@/helpers/base.helper"
 import { useAuth } from "@/stores/auth"
+import { TOUR_MODEL } from "@/models/tour.model"
+import Loading from "@/components/common/loading-background"
 
 interface Props {
   priceAdult: number
   priceChild: number
   id: string
+  tourData: TOUR_MODEL
 }
 const Ticket = (props: Props) => {
   const router = useRouter()
@@ -20,18 +23,21 @@ const Ticket = (props: Props) => {
   const [childNumber, setChildNumber] = useState(0)
   const [_, action] = useBooking()
   const [storeAuth, actionAuth] = useAuth()
+  const [loading, setLoading] = useState(false)
 
   const onSubmit = (e: any) => {
     if (!isSpecialCustomer()) {
       actionAuth.setOpenLogin(true)
     } else {
       if (adultNumber > 0) {
+        setLoading(true)
         action.setBookingData({
           adultNumber,
           childNumber,
           id: props.id,
           totalPrice: adultNumber * props?.priceAdult + childNumber * props?.priceChild
         })
+        setLoading(false)
         return router.push(`/booking/${props?.id}`)
       } else notifyError("Please select at least one adult ticket")
     }
@@ -39,6 +45,7 @@ const Ticket = (props: Props) => {
 
   return (
     <div className="border-[1px] rounded-[8px] py-3 px-2 border-[#166699] flex flex-col gap-[20px]">
+      {loading && <Loading />}
       <div className="text-[14px] font-bold">Ticket number</div>
       <div className="flex items-center justify-between">
         <div>
@@ -76,13 +83,18 @@ const Ticket = (props: Props) => {
         <div className="text-[14px] font-normal">Total</div>
         <div className="text-[16px] font-bold">{formatCurrencyNoUnit(adultNumber * props?.priceAdult + childNumber * props?.priceChild)} VND</div>
       </div>
-      <div className="py-2 w-full rounded-[8px] bg-[#166699] text-white text-center cursor-pointer" onClick={onSubmit}>
+      <div
+        className={`py-2 w-full rounded-[8px] bg-[#166699] text-white text-center ${
+          +props.tourData.buySlot >= props.tourData.limit ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+        }`}
+        onClick={(e) => props.tourData.buySlot < props.tourData.limit && onSubmit(e)}
+      >
         Confirm
       </div>
-      <div className="flex gap-2 items-center">
+      {/* <div className="flex gap-2 items-center">
         <RiErrorWarningLine size={23} />
         Non-refundable
-      </div>
+      </div> */}
     </div>
   )
 }

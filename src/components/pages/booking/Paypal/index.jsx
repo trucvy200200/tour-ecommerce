@@ -77,6 +77,15 @@ const ButtonWrapper = ({ currency, showSpinner, amount, handleSetActiveStep, adu
                     },
                     () => {
                       notifySuccess("Booking successfully")
+                      action.setBookingData({
+                        childNumber: 0,
+                        adultNumber: 0,
+                        totalPrice: 0,
+                        adults: [],
+                        children: [],
+                        fullName: "",
+                        phone: ""
+                      })
                       history.back()
                     },
                     (message) => {
