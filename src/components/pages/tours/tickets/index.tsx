@@ -46,7 +46,10 @@ const Ticket = (props: Props) => {
   return (
     <div className="border-[1px] rounded-[8px] py-3 px-2 border-[#166699] flex flex-col gap-[20px]">
       {loading && <Loading />}
-      <div className="text-[14px] font-bold">Ticket number</div>
+      <div className="flex justify-between flex-wrao">
+        <div className="text-[14px] font-bold">Ticket number</div>
+        <em className="text-[14px]">Remaining tickets: {props.tourData.limit - props.tourData.buySlot}</em>
+      </div>
       <div className="flex items-center justify-between">
         <div>
           <div className="text-[14px] font-bold">Adult</div>
@@ -91,6 +94,7 @@ const Ticket = (props: Props) => {
       >
         Confirm
       </div>
+      {+props.tourData.buySlot >= props.tourData.limit && <div className="text-center text-red-600 font-bold">Sold out</div>}
       {/* <div className="flex gap-2 items-center">
         <RiErrorWarningLine size={23} />
         Non-refundable
