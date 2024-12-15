@@ -4,7 +4,7 @@ const renderVehicle = (type: string) => {
   switch (type) {
     case "FLIGHT":
       return "Flight"
-    case "Car":
+    case "CAR":
       return "Car"
     default:
       return "There is currently no vehicle"
