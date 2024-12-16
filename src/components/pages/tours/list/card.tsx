@@ -24,7 +24,7 @@ const Card = (props: Props) => {
         <div className="text-[14px]">{props?.data?.location}</div>
         <div className="capitalize font-bold text-[20px] line-clamp-1">{props?.data?.name}</div>
         <div
-          className="text-[14px] decoration-none line-clamp-2 break-word text-wrap"
+          className="text-[14px] decoration-none line-clamp-2 break-word text-wrap text-description"
           dangerouslySetInnerHTML={{
             __html: props?.data?.description
           }}

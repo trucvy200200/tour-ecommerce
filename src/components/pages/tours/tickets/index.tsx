@@ -29,6 +29,7 @@ const Ticket = (props: Props) => {
     if (!isSpecialCustomer()) {
       actionAuth.setOpenLogin(true)
     } else {
+      if (adultNumber + childNumber + props.tourData?.buySlot > props.tourData?.limit) return notifyError("Number of tickets exceeded")
       if (adultNumber > 0) {
         setLoading(true)
         action.setBookingData({
@@ -62,7 +63,7 @@ const Ticket = (props: Props) => {
               adultNumber > 0 && setAdultNumber(adultNumber - 1)
             }}
           />
-          <div className="cursor-default">{adultNumber}</div>
+          <input value={adultNumber} onChange={(e) => setAdultNumber(+e.target.value)} className="w-[40px] outline-none text-center" />
           <FaPlus className="cursor-pointer" onClick={() => setAdultNumber(adultNumber + 1)} />
         </div>
       </div>
@@ -78,7 +79,7 @@ const Ticket = (props: Props) => {
               childNumber > 0 && setChildNumber(childNumber - 1)
             }}
           />
-          <div className="cursor-default">{childNumber}</div>
+          <input value={childNumber} onChange={(e) => setChildNumber(+e.target.value)} className="w-[40px] outline-none text-center" />
           <FaPlus className="cursor-pointer" onClick={() => setChildNumber(childNumber + 1)} />
         </div>
       </div>
