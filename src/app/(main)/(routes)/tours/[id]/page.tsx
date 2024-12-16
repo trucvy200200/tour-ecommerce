@@ -33,15 +33,18 @@ export default function TourDetail() {
         </div>
         <div className="grid grid-cols-[60%_40%] max-md:flex-col-reverse max-md:flex gap-2">
           <div className="left-content flex flex-col gap-[20px]">
-            <div className="flex gap-2">
-              <div className="flex items-center gap-2">
-                <FaPhone color="#008234" size={21} />
-                <div className="text-[#008234] font-bold">Call for advanced booking:</div>
+            {store?.detail?.phone && (
+              <div className="flex gap-2">
+                <div className="flex items-center gap-2">
+                  <FaPhone color="#008234" size={21} />
+                  <div className="text-[#008234] font-bold">Call for advanced booking:</div>
+                </div>
+                <a className="cursor-pointer font-bold" href="tel:091231233">
+                  {store?.detail?.phone}
+                </a>
               </div>
-              <a className="cursor-pointer font-bold" href="tel:091231233">
-                {store?.detail?.phone}
-              </a>
-            </div>
+            )}
+
             <div className="flex gap-2 items-center">
               <MdAccessTime size={23} />
               <span className="font-bold text-[16px]">
@@ -49,25 +52,31 @@ export default function TourDetail() {
               </span>
             </div>
             <div dangerouslySetInnerHTML={{ __html: (store?.detail?.description as string) || "" }} className="text-[16px]"></div>
-            <div className="flex flex-col gap-[10px]">
-              <div className="text-[20px] font-bold">Regulations</div>
-              <div dangerouslySetInnerHTML={{ __html: (store?.detail?.regulation as string) || "" }} />
-            </div>
-            <div className="flex flex-col gap-[20px] cursor-pointer">
-              <div className="text-[20px] font-bold">Address</div>
-              <div className="flex gap-2">
-                <span>
-                  <GoLocation color="#5c5a72" size={24} />
-                </span>
-                <a target="_blank" href={`http://maps.google.com/?q=${store?.detail?.address}`}>
-                  {store?.detail?.address}
-                </a>
+            {store?.detail?.regulation && (
+              <div className="flex flex-col gap-[10px]">
+                <div className="text-[20px] font-bold">Regulations</div>
+                <div dangerouslySetInnerHTML={{ __html: (store?.detail?.regulation as string) || "" }}></div>
               </div>
-            </div>
-            <div>
-              <div className="text-[20px] font-bold">Plan</div>
-              <div dangerouslySetInnerHTML={{ __html: (store?.detail?.plan as string) || "" }} />
-            </div>
+            )}
+            {store?.detail?.address && (
+              <div className="flex flex-col gap-[20px] cursor-pointer">
+                <div className="text-[20px] font-bold">Address</div>
+                <div className="flex gap-2">
+                  <span>
+                    <GoLocation color="#5c5a72" size={24} />
+                  </span>
+                  <a target="_blank" href={`http://maps.google.com/?q=${store?.detail?.address}`}>
+                    {store?.detail?.address}
+                  </a>
+                </div>
+              </div>
+            )}
+            {store?.detail?.plan && (
+              <div>
+                <div className="text-[20px] font-bold">Plan</div>
+                <div dangerouslySetInnerHTML={{ __html: (store?.detail?.plan as string) || "" }} />
+              </div>
+            )}
           </div>
           <div className="right-content ml-[30px] max-md:ml-0">
             <div className="mb-[15px] flex flex-col gap-[15px]">
