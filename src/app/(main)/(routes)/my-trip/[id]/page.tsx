@@ -191,7 +191,8 @@ const MyTripDetail = () => {
             store?.detail?.orderStatus !== ORDER_STATUS.CANCELLED &&
             store?.detail?.orderStatus !== ORDER_STATUS.CANCELLED_BY_ADMIN && (
               <>
-                <div className="my-3 text-red-600 font-bold">Pay the remaining amount: {formatCurrencyNoUnit(store?.detail?.totalAmount - store?.detail?.depositAmount)} VND</div>
+                <div className="mt-3 text-red-600 font-bold">Pay the remaining amount: </div>
+                <div className="mb-3 text-red-600 font-bold">{formatCurrencyNoUnit(store?.detail?.totalAmount - store?.detail?.depositAmount)} VND</div>
                 <Paypal amount={naiveRound(store.detail?.totalAmount - store?.detail?.depositAmount, 0)} />
               </>
             )}
