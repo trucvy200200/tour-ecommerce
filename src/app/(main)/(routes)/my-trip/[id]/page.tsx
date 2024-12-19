@@ -99,9 +99,7 @@ const MyTripDetail = () => {
       <div className="font-bold text-[25px] mb-5">Check your information</div>
       <div className="grid grid-cols-[68%_30%] gap-4 max-md:grid-cols-1">
         <div className="shadow-[rgba(0,0,0,0.12)_0px_0px_8px] rounded-[3px] overflow-hidden py-[20px] px-[10px]">
-          <div className="mb-3 underline text-[#006ce4] text-[20px] font-bold cursor-pointer w-fit" onClick={() => router.push("/tours/1")}>
-            {store?.detail?.tourName}
-          </div>
+          <div className="mb-3 underline text-[#006ce4] text-[20px] font-bold cursor-pointer w-fit">{store?.detail?.tourName}</div>
           <div className="flex flex-col gap-[15px] border-b-[2px] pb-[20px]">
             <div className="flex justify-between">
               <div className="font-bold">Order status</div>
